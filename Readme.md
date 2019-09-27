@@ -2,14 +2,23 @@
 
 This is a part of the local infrastructure project which aims to create easy to install and use environment for PHP development based on Ubuntu LTS.
 
-1. [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts) - install software, clone repositories with `Docker infrastructure` and
-`Dockerizer for PHP` tool. Development completed, will be released soon;
+1. [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts) - install software,
+clone repositories with `Docker infrastructure` and `Dockerizer for PHP` tool. Infrastructure is launched automatically
+during setup and you do not need start it manually. Check this repo to get more info about what software is installed,
+where the files are located and why we think this software is needed.
 
-2. `Docker infrastructure` - run [Traefik](https://traefik.io/) reverse-proxy container with linked MySQL 5.6, 5.7 and
-phpMyAdmin containers;
+! Development completed, the script will be released in a few days or even today !
 
-3. [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) - install any Magento 2 version in one command. Add Docker files for you PHP projects
-in one command.
+2. `Docker infrastructure` (this repository) - run [Traefik](https://traefik.io/) reverse-proxy container with linked 
+MySQL 5.6, 5.7 and phpMyAdmin containers. Infrastructure is cloned and run automatically by the
+[Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Check this repository
+for more information on how the infrastructure works, how to use xDebug, LiveReload etc.
+
+3. [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) - install any Magento 2 version in 1
+command. Add Docker files to your existing PHP projects in one command. This repository is cloned automatically
+by the [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Please, check
+[Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) repository to get more information on available
+commands and what the tool does.
 
 
 ## Local infrastructure ##
@@ -159,4 +168,5 @@ able to re-use and easily **extend** containers or compose files for their needs
 ## Author and maintainer ##
 
 [Maksym Zaporozhets](mailto:maksimz@default-value.com)
+
 [Magento profile](https://u.magento.com/certification/directory/dev/180177/)
