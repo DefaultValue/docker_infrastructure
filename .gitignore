@@ -1,0 +1,3 @@
+.idea/*
+/local_infrastructure/mysql*
+/local_infrastructure/traefik_rules/rules.toml

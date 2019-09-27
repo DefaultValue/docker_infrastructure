@@ -1,0 +1,55 @@
+# SSL certificates for development
+# $ mkcert example.com www.example.com example-2.com www.example-2.com
+#
+# DEVELOPMENT:
+# $ docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d
+#
+# PRODUCTION:
+# $ docker-compose up -d
+#
+# MacOS (development only)
+# docker-sync-stack start
+version: '3.7'
+services:
+  php-apache:
+    container_name: example.com
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        # needed for the build stage
+        # Install memcached inside container if needed. Better to use external Memcached container and only have
+        # php extension to connect to it
+        - MEMCACHED=0
+    restart: always
+    labels:
+      # - traefik.enable=false
+      - traefik.http.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
+      - traefik.http.frontend.entryPoints=http
+      - traefik.https.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
+      - traefik.https.frontend.entryPoints=https
+      - traefik.https.protocol=https
+      - traefik.https.port=443
+    # Must add extra_hosts to be written to /etc/hosts - otherwise containerized application can not curl itself
+    extra_hosts:
+      - "example.com www.example.com example-2.com www.example-2.com:127.0.0.1"
+#    links:
+#      - memcached
+    external_links:
+      - mysql57:mysql
+#    networks:
+#      - reverse-proxy
+    network_mode: bridge
+    volumes:
+      - .:/var/www/html
+      - /misc/share/ssl:/certs
+      - ./docker/virtual-host.conf:/etc/apache2/sites-enabled/virtual-host.conf
+
+#  memcached:
+#    image: 'memcached:1.5'
+#    network_mode: bridge
+#    restart: always
+
+#networks:
+#  reverse-proxy:
+#    external: true

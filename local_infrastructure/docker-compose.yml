@@ -1,0 +1,87 @@
+version: '3.7'
+services:
+  reverse-proxy:
+    container_name: reverse-proxy
+    image: traefik # The official Traefik docker image
+    restart: always
+    command: --api --docker # Enables the web UI and tells Traefik to listen to docker
+    network_mode: bridge
+#    networks:
+#      - reverse-proxy
+    ports:
+      - 80:80     # The HTTP port
+      - 443:443
+      - 8080:8080 # The Web UI (enabled by --api)
+      - 35729:35729 # livereload port
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - ./traefik.toml:/traefik.toml
+      - ./traefik_rules/:/traefik_rules/
+      - /misc/share/ssl/:/certs/
+
+  mysql56:
+    container_name: mysql56
+    image: mysql:5.6
+    restart: always
+    labels:
+      - 'traefik.enable=false'
+    network_mode: bridge
+    ports:
+      - 3356:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASS=root
+    volumes:
+      - ./mysql56_databases:/var/lib/mysql
+      - ./my.cnf:/etc/my.cnf
+
+  mysql57:
+    container_name: mysql57
+    image: mysql:5.7
+    restart: always
+    labels:
+      - 'traefik.enable=false'
+    network_mode: bridge
+    ports:
+      - 3357:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASS=root
+    volumes:
+      - ./mysql57_databases:/var/lib/mysql
+      - ./my.cnf:/etc/my.cnf
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    labels:
+      - 'traefik.frontend.rule=Host:phpmyadmin.docker.local'
+    network_mode: bridge
+    depends_on:
+      - reverse-proxy
+      - mysql56
+      - mysql57
+    links:
+      - mysql56:mysql56
+      - mysql57:mysql57
+    environment:
+      - PMA_HOSTS=mysql57,mysql56
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+      - PMA_ABSOLUTE_URI=http://phpmyadmin.docker.local/
+    volumes:
+      - /sessions
+
+#networks:
+#  bridge:
+#    external: true
+# docker network create -d bridge reverse-proxy
+
+# will not work when the OS restarts
+#networks:
+#  reverse-proxy:
+#    name: reverse-proxy
+#    driver: bridge
