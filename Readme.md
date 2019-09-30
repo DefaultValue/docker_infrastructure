@@ -7,8 +7,6 @@ clone repositories with `Docker infrastructure` and `Dockerizer for PHP` tool. I
 during setup and you do not need start it manually. Check this repo to get more info about what software is installed,
 where the files are located and why we think this software is needed.
 
-! Development completed, the script will be released in a few days or even today !
-
 2. `Docker infrastructure` (this repository) - run [Traefik](https://traefik.io/) reverse-proxy container with linked 
 MySQL 5.6, 5.7 and phpMyAdmin containers. Infrastructure is cloned and run automatically by the
 [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Check this repository
