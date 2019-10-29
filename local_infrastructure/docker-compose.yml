@@ -54,6 +54,23 @@ services:
       - ./mysql57_databases:/var/lib/mysql
       - ./my.cnf:/etc/my.cnf
 
+  mariadb:
+    container_name: mariadb
+    image: 'bitnami/mariadb:latest'
+    user: root
+    restart: always
+    labels:
+      - 'traefik.enable=false'
+    network_mode: bridge
+    ports:
+      - 3358:3306
+    environment:
+      - MARIADB_ROOT_USER=root
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - ./mariadb_databases:/bitnami/mariadb
+      - ./my.cnf:/etc/my.cnf
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
@@ -68,8 +85,9 @@ services:
     links:
       - mysql56:mysql56
       - mysql57:mysql57
+      - mariadb:mariadb
     environment:
-      - PMA_HOSTS=mysql57,mysql56
+      - PMA_HOSTS=mysql57,mysql56,mariadb
       - PMA_USER=root
       - PMA_PASSWORD=root
       - PMA_ABSOLUTE_URI=http://phpmyadmin.docker.local/
