@@ -56,7 +56,7 @@ services:
 
   mariadb:
     container_name: mariadb
-    image: 'bitnami/mariadb:latest'
+    image: 'bitnami/mariadb:10.3'
     user: root
     restart: always
     labels:
