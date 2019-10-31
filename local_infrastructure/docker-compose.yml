@@ -2,7 +2,8 @@ version: '3.7'
 services:
   reverse-proxy:
     container_name: reverse-proxy
-    image: traefik # The official Traefik docker image
+    # @TODO: move to Traefik v2 image and .yml configuration files
+    image: traefik:1.7 # The official Traefik docker image
     restart: always
     command: --api --docker # Enables the web UI and tells Traefik to listen to docker
     network_mode: bridge
