@@ -95,7 +95,7 @@ mysql -uroot -proot -h127.0.0.1 --port=3357 --show-warnings
 ```
 
 Use `127.0.0.1` in your non-dockerized PHP applications because `localhost` equals to using the socket connection,
-not TCP/IP.
+not TCP/IP. In the PHP apps use `127.0.0.1:3356` or `127.0.0.1:3357` for PDO connection.
 
 MySQL host name inside your application containers in `mysql` by default. It is determined by the external links in
 the `docker-compose.yml` file.
