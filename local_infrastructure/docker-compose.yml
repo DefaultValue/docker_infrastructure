@@ -25,7 +25,7 @@ services:
     image: mysql:5.6
     restart: always
     labels:
-      - 'traefik.enable=false'
+      - traefik.enable=false
     network_mode: bridge
     ports:
       - 3356:3306
@@ -42,7 +42,7 @@ services:
     image: mysql:5.7
     restart: always
     labels:
-      - 'traefik.enable=false'
+      - traefik.enable=false
     network_mode: bridge
     ports:
       - 3357:3306
@@ -56,11 +56,11 @@ services:
 
   mariadb103:
     container_name: mariadb103
-    image: 'bitnami/mariadb:10.3'
+    image: bitnami/mariadb:10.3
     user: root
     restart: always
     labels:
-      - 'traefik.enable=false'
+      - traefik.enable=false
     network_mode: bridge
     ports:
       - 33103:3306
@@ -68,7 +68,7 @@ services:
       - MARIADB_ROOT_USER=root
       - MARIADB_ROOT_PASSWORD=root
     volumes:
-      - ./mariadb_databases:/bitnami/mariadb
+      - ./mariadb103_databases:/bitnami/mariadb
       - ./my.cnf:/etc/my.cnf
 
   phpmyadmin:
@@ -76,7 +76,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     labels:
-      - 'traefik.frontend.rule=Host:phpmyadmin.docker.local'
+      - traefik.frontend.rule=Host:phpmyadmin.docker.local
     network_mode: bridge
     depends_on:
       - reverse-proxy
