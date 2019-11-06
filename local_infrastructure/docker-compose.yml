@@ -7,8 +7,8 @@ services:
     restart: always
     command: --api --docker # Enables the web UI and tells Traefik to listen to docker
     network_mode: bridge
-#    networks:
-#      - reverse-proxy
+    #    networks:
+    #      - reverse-proxy
     ports:
       - 80:80     # The HTTP port
       - 443:443
@@ -25,7 +25,7 @@ services:
     image: mysql:5.6
     restart: always
     labels:
-      - 'traefik.enable=false'
+      - traefik.enable=false
     network_mode: bridge
     ports:
       - 3356:3306
@@ -42,7 +42,7 @@ services:
     image: mysql:5.7
     restart: always
     labels:
-      - 'traefik.enable=false'
+      - traefik.enable=false
     network_mode: bridge
     ports:
       - 3357:3306
@@ -54,12 +54,29 @@ services:
       - ./mysql57_databases:/var/lib/mysql
       - ./my.cnf:/etc/my.cnf
 
+  mariadb103:
+    container_name: mariadb103
+    image: bitnami/mariadb:10.3
+    user: root
+    restart: always
+    labels:
+      - traefik.enable=false
+    network_mode: bridge
+    ports:
+      - 33103:3306
+    environment:
+      - MARIADB_ROOT_USER=root
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - ./mariadb103_databases:/bitnami/mariadb
+      - ./my.cnf:/etc/my.cnf
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     restart: always
     labels:
-      - 'traefik.frontend.rule=Host:phpmyadmin.docker.local'
+      - traefik.frontend.rule=Host:phpmyadmin.docker.local
     network_mode: bridge
     depends_on:
       - reverse-proxy
@@ -68,8 +85,9 @@ services:
     links:
       - mysql56:mysql56
       - mysql57:mysql57
+      - mariadb103:mariadb103
     environment:
-      - PMA_HOSTS=mysql57,mysql56
+      - PMA_HOSTS=mysql57,mysql56,mariadb103
       - PMA_USER=root
       - PMA_PASSWORD=root
       - PMA_ABSOLUTE_URI=http://phpmyadmin.docker.local/
