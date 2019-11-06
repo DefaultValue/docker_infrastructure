@@ -23,7 +23,7 @@ services:
         - MEMCACHED=0
     restart: always
     labels:
-      # - traefik.enable=false
+      - traefik.enable=false
       - traefik.http.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
       - traefik.http.frontend.entryPoints=http
       - traefik.https.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com

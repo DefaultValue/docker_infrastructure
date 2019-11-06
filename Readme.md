@@ -119,6 +119,10 @@ All containers include NodeJS and Grunt for development. Default LiveReload exte
 loading `livereload.js` from the 'remote' server. Please, build and use a forked version that supports these
 features: [LiveReload fork](https://github.com/lokcito/livereload-extensions)
 
+Grunt works over HTTPS entrypoint by default. Requests coming to port `35729` are HTTPS and are compatible with HSTS
+(HTTP Strict Transport Security). Treafik proxies requests to the backend via HTTP. If your website works ONLY via HTTP
+then use port `35730` for LiveReload when you activate it in your browser.
+
 
 ## Generating Magento URN catalog for XML files markup highlight, autocomplete and validation ##
 
@@ -149,6 +153,23 @@ Docker containers should make it possible to use containers with any delivery/de
 consistent. though, as you can see, all applications use the same database containers and work in the same network.
 You can get some ideas from here and create own infrastructures. But do not try using this infrastructure 'as is'
 in production!
+
+## Upgrade infrastructure ##
+
+```bash
+cd /misc/apps/dockerizer_for_php
+git config core.fileMode false
+git pull origin master
+
+cd /misc/apps/docker_infrastructure/
+git config core.fileMode false
+git pull origin master
+cd local_infrastructure/
+docker-compose down
+docker-compose up -d --force-recreate
+```
+
+After this restart your compositions.
 
 
 ## TODO ##

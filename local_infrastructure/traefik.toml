@@ -6,8 +6,11 @@ insecureSkipVerify = true
 [entryPoints]
  [entryPoints.http]
  address = ':80'
+ [entryPoints.gruntHttp]
+ address = ':35730'
  [entryPoints.grunt]
  address = ':35729'
+ [entryPoints.grunt.tls]
 #    [entryPoints.http.redirect]
 #    entryPoint = “https”
  [entryPoints.https]
