@@ -27,4 +27,4 @@ watch = true
 [retry]
 
 #[docker]
-#  exposedByDefault = false
+exposedByDefault = false
