@@ -76,11 +76,26 @@ If you want to configure the things manually (and learn how the things work):
 
 5) add an entry to your `/etc/hosts` file.
 
-For development, run the project container as following:
+For development with production domains, run the project container as following:
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose-prod.yml up -d --build --force-recreate
+```
+
+For development with development domains, run the project container as following:
 
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose-dev.yml up -d --build --force-recreate
 ```
+
+Add more `docker-compose-xxx.yml` files if you have more environments. Copy them from `docker-compose-dev.yml`. Be sure to:
+
+1. add staging/test/etc. domains to the `docker/virtual-host.conf` file;
+
+2. add staging/test/etc. domains to the list of domains in the example command to generate SSL certificates (see comments at the top of the `docker-compose.yml` file);
+
+3. change the number of domains in the `SSLCertificateFile` and `SSLCertificateKeyFile` directives of the `docker/virtual-host.conf` file.
+
 
 ## MySQL ##
 

@@ -29,14 +29,14 @@ services:
       # Must be set to some of the domains for xdebug to work. Should have server configured in
       # Preferences > Language and Frameworks > PHP > Servers
       # Or just run the project with the same domain and debug enabled in the browser
-      - PHP_IDE_CONFIG=serverName=example.com
+      - PHP_IDE_CONFIG=serverName=example-dev.com
 #      - PHP_XDEBUG_ENABLED=1 # needed for the entrypoint script
 
 # IMPORTANT FOR MAC USERS!!!
 # ALL BELOW is for Mac only to enable docker sync stack
 #    volumes:
-#      - example.com-sync:/var/www/html:nocopy
+#      - example-dev.com-sync:/var/www/html:nocopy
 
 #volumes:
-#  example.com-sync:
+#  example-dev.com-sync:
 #    external: true

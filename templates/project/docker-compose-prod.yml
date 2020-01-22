@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  php-apache:
+    build:
+      args:
+        - DEVELOPER_MODE=1 # needed for the build stage
+    user: docker:docker
+    sysctls:
+      - net.ipv4.ip_unprivileged_port_start=0
+    labels:
+      # develop with extension that allows setting livereload host and port - https://github.com/lokcito/livereload-extensions
+      - traefik.grunt.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
+      - traefik.grunt.frontend.entryPoints=grunt
+      - traefik.grunt.protocol=http
+      - traefik.grunt.port=35729
+      - traefik.gruntHttp.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
+      - traefik.gruntHttp.frontend.entryPoints=gruntHttp
+      - traefik.gruntHttp.backend=grunt
+      - traefik.gruntHttp.protocol=http
+      - traefik.gruntHttp.port=35729
+    environment:
+      - PHP_IDE_CONFIG=serverName=example.com
+
+# IMPORTANT FOR MAC USERS!!!
+# ALL BELOW is for Mac only to enable docker sync stack
+#    volumes:
+#      - example.com-sync:/var/www/html:nocopy
+
+#volumes:
+#  example.com-sync:
+#    external: true
