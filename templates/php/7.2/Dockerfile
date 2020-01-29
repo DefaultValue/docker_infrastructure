@@ -34,8 +34,7 @@ RUN if [ "$MEMCACHED" = 1 ] ; then \
     fi ;
 
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev ; \
-    docker-php-ext-install sodium
+    apt-get update && apt-get -t stretch-backports install -y libsodium-dev
 
 RUN rm -r /var/lib/apt/lists/*
 
@@ -44,7 +43,7 @@ RUN docker-php-ext-configure \
   gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pdo_mysql recode soap xml xmlrpc xsl zip bcmath
+RUN docker-php-ext-install gd intl pdo_mysql recode soap xml xmlrpc xsl zip bcmath sodium sockets
 
 RUN if [ "$DEVELOPER_MODE" = 1 ] ; then \
         pecl install xdebug ; \

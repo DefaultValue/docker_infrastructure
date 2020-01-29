@@ -32,23 +32,21 @@ BASH
         ],
         '7.2' => [
             'additional_modules' => [
-                'bcmath'
+                'bcmath sodium sockets'
             ],
             'additional_run' => <<<BASH
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev ; \
-    docker-php-ext-install sodium
+    apt-get update && apt-get -t stretch-backports install -y libsodium-dev
 BASH
 
         ],
         '7.3' => [
             'additional_modules' => [
-                'bcmath'
+                'bcmath sodium sockets'
             ],
             'additional_run' => <<<BASH
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev ; \
-    docker-php-ext-install sodium
+    apt-get update && apt-get -t stretch-backports install -y libsodium-dev
 BASH
         ],
     ];
