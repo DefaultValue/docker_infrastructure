@@ -35,6 +35,7 @@ services:
       - "example.com www.example.com example-2.com www.example-2.com:127.0.0.1"
 #    links:
 #      - memcached
+#      - redis
     external_links:
       - mysql57:mysql
 #    networks:
@@ -45,9 +46,18 @@ services:
       - /misc/share/ssl:/certs
       - ./docker/virtual-host.conf:/etc/apache2/sites-enabled/virtual-host.conf
 
+#  redis:
+#    image: redis:latest
+#    network_mode: bridge
+#    labels:
+#      - traefik.enable=false
+#    restart: always
+
 #  memcached:
 #    image: 'memcached:1.5'
 #    network_mode: bridge
+#    labels:
+#      - traefik.enable=false
 #    restart: always
 
 #networks:
