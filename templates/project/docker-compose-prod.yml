@@ -18,6 +18,10 @@ services:
       - traefik.gruntHttp.backend=grunt
       - traefik.gruntHttp.protocol=http
       - traefik.gruntHttp.port=35729
+    extra_hosts:
+      # For Linux users only till docker.host.internal is not available by default
+      # https://github.com/docker/libnetwork/pull/2348/files
+      - "host.docker.internal:172.17.0.1"
     environment:
       - PHP_IDE_CONFIG=serverName=example.com
 

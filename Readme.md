@@ -134,9 +134,16 @@ All containers include NodeJS and Grunt for development. Default LiveReload exte
 loading `livereload.js` from the 'remote' server. Please, build and use a forked version that supports these
 features: [LiveReload fork](https://github.com/lokcito/livereload-extensions)
 
-Grunt works over HTTPS entrypoint by default. Requests coming to port `35729` are HTTPS and are compatible with HSTS
-(HTTP Strict Transport Security). Treafik proxies requests to the backend via HTTP. If your website works ONLY via HTTP
-then use port `35730` for LiveReload when you activate it in your browser.
+Grunt works over HTTPS entrypoint by default (port `35729`) and thus is compatible with HSTS (HTTP Strict Transport
+Security). Treafik proxies requests to the backend via HTTP. There are three possible cases:
+
+1) website uses HTTPS and HSTS header is present - use the default port `35729`;
+
+2) website uses HTTPS without the HSTS header - use the port `35730` and enable insecure (mixed) content for yor
+website. In Google Chrome: click the `HTTPS` icon left to the website address, enter the `Site settings` and set
+`Insecure content` to `Allow`.
+
+3) website uses HTTP - use the port `35730`.
 
 
 ## Generating Magento URN catalog for XML files markup highlight, autocomplete and validation ##

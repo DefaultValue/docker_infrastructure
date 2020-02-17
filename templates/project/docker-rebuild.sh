@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # >>> Turn off composition, remove containers
-docker-compose -f ./docker-compose.yml -f ./docker-compose-prod.yml down
+docker-compose -f docker-compose.yml -f docker-compose-prod.yml down
 # >>> Remove ALL stopped containers
 # docker rm $(docker ps -a -q)
 # >>> Remove all images

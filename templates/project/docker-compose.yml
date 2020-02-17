@@ -36,6 +36,7 @@ services:
 #    links:
 #      - memcached
 #      - redis
+#      - elasticsearch
     external_links:
       - mysql57:mysql
 #    networks:
@@ -59,6 +60,22 @@ services:
 #    labels:
 #      - traefik.enable=false
 #    restart: always
+
+#  elasticsearch:
+#    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.6
+#    environment:
+#      http.host: 0.0.0.0
+#      transport.host: localhost
+#      network.host: 0.0.0.0
+#      xpack.security.enabled: "false"
+#      indices.query.bool.max_clause_count: 10240
+#      ES_JAVA_OPTS: -Xms512m -Xmx512m
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    restart: always
+#    network_mode: bridge
 
 #networks:
 #  reverse-proxy:
