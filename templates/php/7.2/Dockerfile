@@ -73,7 +73,7 @@ RUN docker-php-ext-install opcache ; \
 
 # Grunt uses PHP :( So need to install it for dev env. Let's for now orient on DEVELOPER_MODE variable for now
 RUN if [ "$DEVELOPER_MODE" = 1 ] ; then \
-        curl -sL https://deb.nodesource.com/setup_11.x | bash - \
+        curl -sL https://deb.nodesource.com/setup_12.x | bash - \
         && apt-get install nodejs -y \
         && npm install -g grunt-cli ; \
     fi ;
