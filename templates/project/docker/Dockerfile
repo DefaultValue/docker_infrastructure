@@ -45,7 +45,7 @@ RUN docker-php-ext-configure \
 RUN docker-php-ext-install gd intl pdo_mysql recode soap xml xmlrpc xsl zip {{additional_modules}}
 
 RUN if [ "$DEVELOPER_MODE" = 1 ] ; then \
-        pecl install xdebug ; \
+        pecl install xdebug{{xdebug_version}} ; \
         docker-php-ext-enable xdebug ; \
         echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
         && echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \

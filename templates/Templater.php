@@ -10,20 +10,15 @@ class Templater
             'additional_libs' => [
                 'libmcrypt-dev'
             ],
-            'additional_modules' => [
-                'bcmath',
-                'mcrypt'
-            ]
+            'additional_modules' => 'bcmath mcrypt',
+            'xdebug_version' => '-2.6.0'
         ],
         // Includes Magento 2.3.2 fix for libsodium lib requirements https://github.com/magento/magento2/issues/23405#issuecomment-506725788
         '7.1' => [
             'additional_libs' => [
                 'libmcrypt-dev'
             ],
-            'additional_modules' => [
-                'bcmath',
-                'mcrypt'
-            ],
+            'additional_modules' => 'bcmath mcrypt',
             'additional_run' => <<<BASH
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
     apt-get update && apt-get -t stretch-backports install -y libsodium-dev ; \
@@ -31,9 +26,7 @@ RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/s
 BASH
         ],
         '7.2' => [
-            'additional_modules' => [
-                'bcmath sodium sockets'
-            ],
+            'additional_modules' => 'bcmath sodium sockets',
             'additional_run' => <<<BASH
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
     apt-get update && apt-get -t stretch-backports install -y libsodium-dev
@@ -41,9 +34,7 @@ BASH
 
         ],
         '7.3' => [
-            'additional_modules' => [
-                'bcmath sodium sockets'
-            ],
+            'additional_modules' => 'bcmath sodium sockets',
             'additional_run' => <<<BASH
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
     apt-get update && apt-get -t stretch-backports install -y libsodium-dev
@@ -66,10 +57,9 @@ BASH
                 '{{additional_libs}}' => isset($settings['additional_libs'])
                     ? implode(' ', $settings['additional_libs'])
                     : '',
-                '{{additional_modules}}' => isset($settings['additional_modules'])
-                    ? implode(' ', $settings['additional_modules'])
-                    : '',
-                '{{additional_run}}' => $settings['additional_run'] ?? ''
+                '{{additional_modules}}' => $settings['additional_modules'] ?? '',
+                '{{additional_run}}' => $settings['additional_run'] ?? '',
+                '{{xdebug_version}}' => $settings['xdebug_version'] ?? ''
             ];
 
             $dockerfile = str_replace(array_keys($replacement), array_values($replacement), $template);
