@@ -18,7 +18,7 @@ class Templater
             'additional_libs' => [
                 'libmcrypt-dev'
             ],
-            'additional_modules' => 'bcmath mcrypt',
+            'additional_modules' => 'bcmath mcrypt sockets',
             'additional_run' => <<<BASH
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
     apt-get update && apt-get -t stretch-backports install -y libsodium-dev ; \
