@@ -1,0 +1,4 @@
+[http.routers.dashboard]
+  rule = "Host(`dash.docker.local`)"
+  service = "api@internal"
+  entryPoints = ["web"]

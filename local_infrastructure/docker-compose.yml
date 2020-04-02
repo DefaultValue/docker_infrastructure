@@ -1,14 +1,28 @@
+#networks:
+# docker network create infrastructure_network
+
 version: '3.7'
+
+volumes:
+  mysql56_volume:
+    name: MySql56-Volume
+  mysql57_volume:
+    name: MySql57-Volume
+  mariadb_volume:
+    name: MariaDB-Volume
+
+networks:
+  infrastructure_network:
+    external:
+      name: infrastructure_network
+
 services:
   reverse-proxy:
-    container_name: reverse-proxy
-    # @TODO: move to Traefik v2 image and .yml configuration files
-    image: traefik:1.7 # The official Traefik docker image
+    image: traefik:v2.2.0
+    container_name: "reverse-proxy"
     restart: always
-    command: --api --docker # Enables the web UI and tells Traefik to listen to docker
-    network_mode: bridge
-    #    networks:
-    #      - reverse-proxy
+    networks:
+      - infrastructure_network
     ports:
       - 80:80     # The HTTP port
       - 443:443
@@ -18,7 +32,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./traefik.toml:/traefik.toml
-      - ./traefik_rules/:/traefik_rules/
+      - ./configuration/:/configuration/
       - /misc/share/ssl/:/certs/
 
   mysql56:
@@ -27,7 +41,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 3356:3306
     environment:
@@ -35,7 +50,7 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASS=root
     volumes:
-      - ./mysql56_databases:/var/lib/mysql
+      - mysql56_volume:/var/lib/mysql
       - ./my.cnf:/etc/my.cnf
 
   mysql57:
@@ -44,7 +59,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 3357:3306
     environment:
@@ -52,7 +68,7 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASS=root
     volumes:
-      - ./mysql57_databases:/var/lib/mysql
+      - mysql57_volume:/var/lib/mysql
       - ./my.cnf:/etc/my.cnf
 
   mariadb103:
@@ -62,14 +78,15 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 33103:3306
     environment:
       - MARIADB_ROOT_USER=root
       - MARIADB_ROOT_PASSWORD=root
     volumes:
-      - ./mariadb103_databases:/bitnami/mariadb
+      - mariadb_volume:/bitnami/mariadb
       - ./my.cnf:/etc/my.cnf
 
   phpmyadmin:
@@ -77,8 +94,11 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     labels:
-      - traefik.frontend.rule=Host:phpmyadmin.docker.local
-    network_mode: bridge
+      - traefik.enable=true
+      - traefik.http.routers.phpmyadmin-http.rule=Host(`phpmyadmin.docker.local`)
+      - traefik.http.routers.phpmyadmin-http.entrypoints=web
+    networks:
+      - infrastructure_network
     depends_on:
       - reverse-proxy
       - mysql56
@@ -94,14 +114,3 @@ services:
       - PMA_ABSOLUTE_URI=http://phpmyadmin.docker.local/
     volumes:
       - /sessions
-
-#networks:
-#  bridge:
-#    external: true
-# docker network create -d bridge reverse-proxy
-
-# will not work when the OS restarts
-#networks:
-#  reverse-proxy:
-#    name: reverse-proxy
-#    driver: bridge
