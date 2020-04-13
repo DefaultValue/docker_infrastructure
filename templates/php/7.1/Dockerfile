@@ -44,7 +44,7 @@ RUN docker-php-ext-configure \
   gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
+RUN docker-php-ext-install gd intl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt sockets
 
 RUN if [ "$DEVELOPER_MODE" = 1 ] ; then \
         pecl install xdebug ; \
