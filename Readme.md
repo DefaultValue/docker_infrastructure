@@ -128,6 +128,15 @@ need to restart PHPStorm after this.
 For CLI debug run the web debug first (better) or configure `Servers` manually. PHP_IDE_CONFIG equals to the domain name.
 
 
+## Mailhog ##
+
+Using [Mailhog](https://github.com/mailhog/MailHog) for catching outgoing emails. It is available locally on port `8025`:
+[Mailhog local address](http://localhost:8025)
+
+We use [mhsendmail](https://github.com/mailhog/mhsendmail) as a Sendmail replacement. Be sure that your website does not
+use external SMTP to send emails. In this case PHP may not control how the emails are sent.
+
+
 ## LiveReload ##
 
 All containers include NodeJS and Grunt for development. Default LiveReload extension for Chrome does not support
