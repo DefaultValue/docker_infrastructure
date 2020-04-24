@@ -1,6 +1,3 @@
-#networks:
-# docker network create infrastructure_network
-
 version: '3.7'
 
 volumes:
@@ -8,8 +5,10 @@ volumes:
     name: MySql56-Volume
   mysql57_volume:
     name: MySql57-Volume
-  mariadb_volume:
-    name: MariaDB-Volume
+  mariadb101_volume:
+    name: MariaDB101-Volume
+  mariadb103_volume:
+    name: MariaDB103-Volume
 
 networks:
   infrastructure_network:
@@ -18,7 +17,7 @@ networks:
 
 services:
   reverse-proxy:
-    image: traefik:v2.2.0
+    image: traefik:v2.2
     container_name: "reverse-proxy"
     restart: always
     networks:
@@ -26,7 +25,7 @@ services:
     ports:
       - 80:80     # The HTTP port
       - 443:443
-      - 8080:8080 # The Web UI (enabled by --api)
+      - 8080:8080 # The Web UI
       - 35729:35729 # livereload HTTPS port
       - 35730:35730 # livereload HTTP port
     volumes:
@@ -78,14 +77,15 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 33101:3306
     environment:
       - MARIADB_ROOT_USER=root
       - MARIADB_ROOT_PASSWORD=root
     volumes:
-      - ./mariadb101_databases:/bitnami/mariadb
+      - mariadb101_volume:/bitnami/mariadb
       - ./my.cnf:/etc/my.cnf
 
   mariadb103:
@@ -103,7 +103,7 @@ services:
       - MARIADB_ROOT_USER=root
       - MARIADB_ROOT_PASSWORD=root
     volumes:
-      - mariadb_volume:/bitnami/mariadb
+      - mariadb103_volume:/bitnami/mariadb
       - ./my.cnf:/etc/my.cnf
 
   phpmyadmin:
@@ -120,6 +120,8 @@ services:
       - reverse-proxy
       - mysql56
       - mysql57
+      - mariadb101
+      - mariadb103
     links:
       - mysql56:mysql56
       - mysql57:mysql57
@@ -141,14 +143,3 @@ services:
     ports:
       - 1025:1025
       - 8025:8025
-
-#networks:
-#  bridge:
-#    external: true
-# docker network create -d bridge reverse-proxy
-
-# will not work when the OS restarts
-#networks:
-#  reverse-proxy:
-#    name: reverse-proxy
-#    driver: bridge
