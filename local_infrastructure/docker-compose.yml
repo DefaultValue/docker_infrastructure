@@ -71,6 +71,23 @@ services:
       - mysql57_volume:/var/lib/mysql
       - ./my.cnf:/etc/my.cnf
 
+  mariadb101:
+    container_name: mariadb101
+    image: bitnami/mariadb:10.1
+    user: root
+    restart: always
+    labels:
+      - traefik.enable=false
+    network_mode: bridge
+    ports:
+      - 33101:3306
+    environment:
+      - MARIADB_ROOT_USER=root
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - ./mariadb101_databases:/bitnami/mariadb
+      - ./my.cnf:/etc/my.cnf
+
   mariadb103:
     container_name: mariadb103
     image: bitnami/mariadb:10.3
@@ -106,11 +123,32 @@ services:
     links:
       - mysql56:mysql56
       - mysql57:mysql57
+      - mariadb101:mariadb101
       - mariadb103:mariadb103
     environment:
-      - PMA_HOSTS=mysql57,mysql56,mariadb103
+      - PMA_HOSTS=mysql57,mysql56,mariadb101,mariadb103
       - PMA_USER=root
       - PMA_PASSWORD=root
       - PMA_ABSOLUTE_URI=http://phpmyadmin.docker.local/
     volumes:
       - /sessions
+
+  mailhog:
+    container_name: mailhog
+    image: mailhog/mailhog:v1.0.0
+    restart: always
+    network_mode: bridge
+    ports:
+      - 1025:1025
+      - 8025:8025
+
+#networks:
+#  bridge:
+#    external: true
+# docker network create -d bridge reverse-proxy
+
+# will not work when the OS restarts
+#networks:
+#  reverse-proxy:
+#    name: reverse-proxy
+#    driver: bridge

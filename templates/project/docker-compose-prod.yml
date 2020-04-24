@@ -18,8 +18,12 @@ services:
       # For Linux users only till docker.host.internal is not available by default
       # https://github.com/docker/libnetwork/pull/2348/files
       - "host.docker.internal:172.17.0.1"
+    external_links:
+      - mailhog
     environment:
       - PHP_IDE_CONFIG=serverName=example.com
+      # For Mailhog and mhsendmail (Sendmail replacement)
+      - ADDITIONAL_PATH=/usr/local/go/bin
 
 # IMPORTANT FOR MAC USERS!!!
 # ALL BELOW is for Mac only to enable docker sync stack

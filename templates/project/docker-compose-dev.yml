@@ -22,11 +22,15 @@ services:
       # https://github.com/docker/libnetwork/pull/2348/files
       - "example-dev.com www.example-dev.com example-2-dev.com www.example-2-dev.com:127.0.0.1"
       - "host.docker.internal:172.17.0.1"
+    external_links:
+      - mailhog
     environment:
       # Must be set to some of the domains for xdebug to work. Should have server configured in
       # Preferences > Language and Frameworks > PHP > Servers
       # Or just run the project with the same domain and debug enabled in the browser
       - PHP_IDE_CONFIG=serverName=example.com
+      # For Mailhog and mhsendmail (Sendmail replacement)
+      - ADDITIONAL_PATH=/usr/local/go/bin
 #      - PHP_XDEBUG_ENABLED=1 # needed for the entrypoint script
 
 # IMPORTANT FOR MAC USERS!!!

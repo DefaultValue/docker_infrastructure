@@ -82,6 +82,14 @@ RUN a2enmod rewrite proxy proxy_http ssl headers expires
 
 RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Install mhsendmail - Sendmail replacement for Mailhog
+RUN if [ "$DEVELOPER_MODE" = 1 ] ; then \
+        curl -Lsf 'https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - ; \
+        /usr/local/go/bin/go get github.com/mailhog/mhsendmail ; \
+        cp /root/go/bin/mhsendmail /usr/bin/mhsendmail ; \
+        echo 'sendmail_path = /usr/bin/mhsendmail --smtp-addr mailhog:1025' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    fi ;
+
 # Must use the same UID/GUI as on the local system for the shared files to be editable on both systems
 RUN if [ "$DEVELOPER_MODE" = 1 ] ; then \
         groupadd -g 1000 docker && useradd -u 1000 -g docker -m docker ; \
