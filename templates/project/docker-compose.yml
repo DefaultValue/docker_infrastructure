@@ -31,16 +31,16 @@ services:
     labels:
       - traefik.enable=true
 
-      - traefik.http.routers.example-router-http.rule=Host(`example.com`, `example-2.com`) || Host(`wwww.example.com`, `www.example-2.com`)
-      - traefik.http.routers.example-router-http.entrypoints=web
-      - traefik.http.routers.example-router-http.service=example-service-unsecure
+      - traefik.http.routers.example-unsecure.rule=Host(`example.com`, `example-2.com`) || Host(`wwww.example.com`, `www.example-2.com`)
+      - traefik.http.routers.example-unsecure.entrypoints=web
+      - traefik.http.routers.example-unsecure.service=example-service-unsecure
       - traefik.http.services.example-service-unsecure.loadbalancer.server.port=80
       - traefik.http.services.example-service-unsecure.loadbalancer.server.scheme=http
 
-      - traefik.http.routers.example-router-https.rule=Host(`example.com`, `example-2.com`) || Host(`wwww.example.com`, `www.example-2.com`)
-      - traefik.http.routers.example-router-https.entrypoints=websecure
-      - traefik.http.routers.example-router-https.tls=true
-      - traefik.http.routers.example-router-https.service=example-service
+      - traefik.http.routers.example-secure.rule=Host(`example.com`, `example-2.com`) || Host(`www.example.com`, `www.example-2.com`)
+      - traefik.http.routers.example-secure.entrypoints=websecure
+      - traefik.http.routers.example-secure.tls=true
+      - traefik.http.routers.example-secure.service=example-service
       - traefik.http.services.example-service.loadbalancer.server.port=443
       - traefik.http.services.example-service.loadbalancer.server.scheme=https
     # Must add extra_hosts to be written to /etc/hosts - otherwise containerized application can not curl itself

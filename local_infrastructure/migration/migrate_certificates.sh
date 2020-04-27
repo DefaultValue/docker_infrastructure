@@ -13,9 +13,7 @@ do
    if [ "$line" == '[[tls]]' ]; then
        echo "  [[tls.certificates]]" >> $new_certificates
        continue
-   elif [ "$line" == *"entryPoints = [\"https\"]"* ] || [ "$line" == *"[tls.certificate]"* ] || [[ $line == *"entryPoints"* ]]; then
-       continue
-   elif [ "$line" == *"[tls.certificate]"* ]; then
+   elif [ "$line" == *"entryPoints = [\"https\"]"* ] || [[ "$line" == *"tls.certificate"* ]] || [[ $line == *"entryPoints"* ]]; then
        continue
    else
        echo "$line" >> $new_certificates
