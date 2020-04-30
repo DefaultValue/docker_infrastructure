@@ -10,18 +10,12 @@ volumes:
   mariadb103_volume:
     name: MariaDB103-Volume
 
-networks:
-  infrastructure_network:
-    external:
-      name: infrastructure_network
-
 services:
   reverse-proxy:
     image: traefik:v2.2
     container_name: "reverse-proxy"
     restart: always
-    networks:
-      - infrastructure_network
+    network_mode: bridge
     ports:
       - 80:80     # The HTTP port
       - 443:443
@@ -40,8 +34,7 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    networks:
-      - infrastructure_network
+    network_mode: bridge
     ports:
       - 3356:3306
     environment:
@@ -58,8 +51,7 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    networks:
-      - infrastructure_network
+    network_mode: bridge
     ports:
       - 3357:3306
     environment:
@@ -77,8 +69,7 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    networks:
-      - infrastructure_network
+    network_mode: bridge
     ports:
       - 33101:3306
     environment:
@@ -95,8 +86,7 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    networks:
-      - infrastructure_network
+    network_mode: bridge
     ports:
       - 33103:3306
     environment:
@@ -114,8 +104,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.phpmyadmin-http.rule=Host(`phpmyadmin.docker.local`)
       - traefik.http.routers.phpmyadmin-http.entrypoints=web
-    networks:
-      - infrastructure_network
+    network_mode: bridge
     depends_on:
       - reverse-proxy
       - mysql56

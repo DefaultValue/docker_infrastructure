@@ -10,11 +10,6 @@
 # MacOS (development only)
 # docker-sync-stack start
 
-networks:
-  default:
-    external:
-      name: infrastructure_network
-
 version: '3.7'
 services:
   php-apache:
@@ -52,8 +47,7 @@ services:
 #      - elasticsearch
     external_links:
       - mysql57:mysql
-    networks:
-      - default
+    network_mode: bridge
     volumes:
       - .:/var/www/html
       - /misc/share/ssl:/certs
