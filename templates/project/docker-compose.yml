@@ -9,6 +9,7 @@
 #
 # MacOS (development only)
 # docker-sync-stack start
+
 version: '3.7'
 services:
   php-apache:
@@ -24,12 +25,19 @@ services:
     restart: always
     labels:
       - traefik.enable=true
-      - traefik.http.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
-      - traefik.http.frontend.entryPoints=http
-      - traefik.https.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
-      - traefik.https.frontend.entryPoints=https
-      - traefik.https.protocol=https
-      - traefik.https.port=443
+
+      - traefik.http.routers.example-unsecure.rule=Host(`example.com`, `example-2.com`) || Host(`wwww.example.com`, `www.example-2.com`)
+      - traefik.http.routers.example-unsecure.entrypoints=web
+      - traefik.http.routers.example-unsecure.service=example-service-unsecure
+      - traefik.http.services.example-service-unsecure.loadbalancer.server.port=80
+      - traefik.http.services.example-service-unsecure.loadbalancer.server.scheme=http
+
+      - traefik.http.routers.example-secure.rule=Host(`example.com`, `example-2.com`) || Host(`www.example.com`, `www.example-2.com`)
+      - traefik.http.routers.example-secure.entrypoints=websecure
+      - traefik.http.routers.example-secure.tls=true
+      - traefik.http.routers.example-secure.service=example-service
+      - traefik.http.services.example-service.loadbalancer.server.port=443
+      - traefik.http.services.example-service.loadbalancer.server.scheme=https
     # Must add extra_hosts to be written to /etc/hosts - otherwise containerized application can not curl itself
     extra_hosts:
       - "example.com www.example.com example-2.com www.example-2.com:127.0.0.1"
@@ -39,8 +47,6 @@ services:
 #      - elasticsearch
     external_links:
       - mysql57:mysql
-#    networks:
-#      - reverse-proxy
     network_mode: bridge
     volumes:
       - .:/var/www/html
@@ -76,7 +82,3 @@ services:
 #        hard: -1
 #    restart: always
 #    network_mode: bridge
-
-#networks:
-#  reverse-proxy:
-#    external: true

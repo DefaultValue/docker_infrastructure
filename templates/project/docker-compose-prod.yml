@@ -9,15 +9,11 @@ services:
       - net.ipv4.ip_unprivileged_port_start=0
     labels:
       # develop with extension that allows setting livereload host and port - https://github.com/lokcito/livereload-extensions
-      - traefik.grunt.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
-      - traefik.grunt.frontend.entryPoints=grunt
-      - traefik.grunt.protocol=http
-      - traefik.grunt.port=35729
-      - traefik.gruntHttp.frontend.rule=Host:example.com,www.example.com,example-2.com,www.example-2.com
-      - traefik.gruntHttp.frontend.entryPoints=gruntHttp
-      - traefik.gruntHttp.backend=grunt
-      - traefik.gruntHttp.protocol=http
-      - traefik.gruntHttp.port=35729
+      - traefik.http.routers.example-router-grunt.rule=Host(`example-dev.com`, `example-2-dev.com`) || Host(`www.example-dev.com`, `www.example-2-dev.com`)
+      - traefik.http.routers.example-router-grunt.entrypoints=livereload-http
+      - traefik.http.routers.example-router-grunt.service=example-service-grunt
+      - traefik.http.services.example-service-grunt.loadbalancer.server.port=35729
+      - traefik.http.services.example-service-grunt.loadbalancer.server.scheme=http
     extra_hosts:
       # For Linux users only till docker.host.internal is not available by default
       # https://github.com/docker/libnetwork/pull/2348/files
