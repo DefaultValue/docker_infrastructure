@@ -9,16 +9,16 @@
   insecureSkipVerify = true
 
 [entryPoints]
-  [entryPoints.web]
+  [entryPoints.http]
     address = ":80"
 
-  [entryPoints.websecure]
+  [entryPoints.https]
     address = ":443"
-	
-  [entryPoints.livereload-http]
-    address = ":35729"
 
   [entryPoints.livereload-https]
+    address = ":35729"
+
+  [entryPoints.livereload-http]
     address = ":35730"
 
 [providers]

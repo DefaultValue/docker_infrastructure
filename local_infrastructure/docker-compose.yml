@@ -17,7 +17,7 @@ services:
     restart: always
     network_mode: bridge
     ports:
-      - 80:80     # The HTTP port
+      - 80:80
       - 443:443
       - 8080:8080 # The Web UI
       - 35729:35729 # livereload HTTPS port
@@ -26,7 +26,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./traefik.toml:/traefik.toml
       - ./configuration/:/configuration/
-      - /misc/share/ssl/:/certs/
+      - ${SSL_CERTIFICATES_DIR}:/certs/
 
   mysql56:
     container_name: mysql56

@@ -40,6 +40,9 @@ echo "Import data for MariaDB103 completed"
 echo "All imports completed"
 echo "Restarting infrastructure..."
 
+export SSL_CERTIFICATES_DIR=/misc/certs/
+export PROJECTS_ROOT_DIR=/misc/apps/
+
 docker-compose down
 docker-compose up -d
 

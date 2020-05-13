@@ -8,7 +8,7 @@ during setup and you do not need start it manually. Check this repo to get more 
 where the files are located and why we think this software is needed.
 
 2. `Docker infrastructure` (this repository) - run [Traefik](https://traefik.io/) reverse-proxy container with linked 
-MySQL 5.6, 5.7 and phpMyAdmin containers. Infrastructure is cloned and run automatically by the
+MySQL 5.6, 5.7, MariaDB 10.1, 10.3, phpMyAdmin and Mailhog containers. Infrastructure is cloned and run automatically by the
 [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Check this repository
 for more information on how the infrastructure works, how to use xDebug, LiveReload etc.
 
@@ -22,9 +22,9 @@ commands and what the tool does.
 ## Local infrastructure ##
 
 Local development infrastructure consists of:
-1) Traefik reverse-proxy with dashboard available at http://localhost:8080
-2) MySQL 5.6 and 5.7 containers
-3) phpMyAdmin - http://phpmyadmin.docker.local 
+1) Traefik reverse-proxy with dashboard - [link](http://traefik.docker.local)
+2) MySQL 5.6 and 5.7, MariaDB 10.1 and 10.3 containers
+3) phpMyAdmin - [link](http://phpmyadmin.docker.local)
 
 Default Docker network `bridge` is used for all communications.
 
@@ -33,30 +33,31 @@ Default Docker network `bridge` is used for all communications.
 All infrastructure is cloned and launched by the `Ubuntu post-installation scripts`. You can do this manually if needed
 as follows:
 
+@TODO: update this
 ```bash
-cd /misc/apps/docker_infrastructure/local_infrastructure
+# The below command is for Ubuntu 20.04 only
+printf '\nexport PROJECTS_ROOT_DIR=${HOME}/misc/certs/' >> ~/.bash_aliases
+printf '\nexport SSL_CERTIFICATES_DIR=${HOME}/misc/certs/' >> ~/.bash_aliases
+
+cd ./local_infrastructure/
 cp ./traefik_rules/rules.toml.dist ./traefik_rules/rules.toml
 docker-compose up -d
 ```
 
-Use the file `/misc/apps/docker_infrastructure/traefik_rules/rules.toml` to add SSL keys for your project. File watcher
-is active, so there is no need to reload/restart Traefik.
+Use the file `./traefik_rules/rules.toml` to add SSL keys for your project. File watcher is active, so there is
+no need to reload/restart Traefik.
 
-After that, you can use Docker files from the folder `/misc/apps/docker_infrastructure/templates` for your project.
+After that, you can use Docker files from the folder `./templates/project/` for your project.
 Better to use `Dockerizer for PHP` instead of moving and editing the files manually.
 
 
 ## Docker Templates ##
 
-*!!! IMPORTANT !!!*
-Soon we plan to upload all Dockerfiles to DockerHub. So, every file will be split into two separate files - development
-and production. Please, follow new releases!
-
 The whole infrastructure consists of the following files:
 
-- `./templates/project/docker-compose.yml` - main 'production' compose file with all services;
-- `./templates/project/docker-compose-dev.yml` - development domains, xDebug, running Apache inside container as
-1000:1000 which is default user/group IDs in Ubuntu. Suitable for easy local development.
+- `./templates/project/docker-compose.yml` - main compose file with all services. Is used to populate environment
+files as well, so that you can upgrade project infrastructure on the dev/stating servers without affecting the
+production configuration
 - `./templates/project/docker-rebuild.sh` - some useful commands for Docker;
 - `./templates/project/docker-sync.yml` - for MasOS users (see the respective section at the bottom)
 - `./templates/project/docker/.htaccess` - protect the `docker` folder inside your project :)
@@ -72,7 +73,7 @@ If you want to configure the things manually (and learn how the things work):
 
 3) change domains, container name etc.;
 
-4) generate ssl certificate with `cd /misc/share/ssl && mkcert example.com www.example.com`;
+4) generate ssl certificate with `cd ${SSL_CERTIFICATES_DIR} && mkcert example.com www.example.com`;
 
 5) add an entry to your `/etc/hosts` file.
 
