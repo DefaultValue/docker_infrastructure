@@ -11,8 +11,6 @@ if ! [ $(sudo id -u) = 0 ]; then
     exit 1;
 fi
 
-cd /misc/apps/docker_infrastructure/local_infrastructure/ || exit
-
 export PROJECTS_ROOT_DIR=/misc/apps/
 export SSL_CERTIFICATES_DIR=/misc/share/ssl/
 
@@ -20,12 +18,25 @@ echo "
 export PROJECTS_ROOT_DIR=/misc/apps/
 export SSL_CERTIFICATES_DIR=/misc/share/ssl/" >> ~/.bash_aliases
 
+cd ${PROJECTS_ROOT_DIR}dockerizer_for_php/ || exit
+git config core.fileMode false
+git reset --hard HEAD
+git pull origin master
+rm -rf vendor/*
+composer install
+
+cd ${PROJECTS_ROOT_DIR}docker_infrastructure/ || exit
+# Stop infrastructure
+docker-compose down
+git config core.fileMode false
+git reset --hard HEAD
+git pull origin master
+
+cd ./local_infrastructure/ || exit
+
 # Create external docker network
 echo "
 127.0.0.1 traefik.docker.local" | sudo tee -a /etc/hosts
-
-# Stop infrastructure
-docker-compose down
 
 # Start infrastructure to create volumes
 docker-compose up -d --force-recreate --build
@@ -52,9 +63,6 @@ echo "Import data for MariaDB103 completed"
 echo "All imports completed"
 echo "Restarting infrastructure..."
 
-docker-compose down
-docker-compose up -d
-
 new_certificates=./configuration/certificates.toml
 touch $new_certificates
 
@@ -74,6 +82,9 @@ do
        echo "$line" >> $new_certificates
    fi
 done
+
+docker-compose down
+docker-compose up -d
 
 rm -rf ./traefik_rules
 sudo rm -rf ./mariadb10*

@@ -30,21 +30,23 @@ Default Docker network `bridge` is used for all communications.
 
 ![Infrastructure schema](https://raw.githubusercontent.com/DefaultValue/docker_infrastructure/master/docker_infrastructure_schema.png)
 
-All infrastructure is cloned and launched by the `Ubuntu post-installation scripts`. You can do this manually if needed
-as follows:
+All infrastructure is cloned and launched by the `Ubuntu post-installation scripts`. You can do this manually if needed:
 
-@TODO: update this
 ```bash
-# The below command is for Ubuntu 20.04 only
+mkdir -p ~/misc/apps ~/misc/certs ~/misc/db
+cd ~/misc/apps && git clone git@github.com:DefaultValue/ubuntu_post_install_scripts.git
 printf '\nexport PROJECTS_ROOT_DIR=${HOME}/misc/certs/' >> ~/.bash_aliases
 printf '\nexport SSL_CERTIFICATES_DIR=${HOME}/misc/certs/' >> ~/.bash_aliases
 
+export PROJECTS_ROOT_DIR=${HOME}/misc/certs/
+export SSL_CERTIFICATES_DIR=${HOME}/misc/certs/
+
 cd ./local_infrastructure/
-cp ./traefik_rules/rules.toml.dist ./traefik_rules/rules.toml
+cp ./configuration/certificates.toml.dist ./configuration/certificates.toml
 docker-compose up -d
 ```
 
-Use the file `./traefik_rules/rules.toml` to add SSL keys for your project. File watcher is active, so there is
+Use the file `./configuration/certificates.toml` to add SSL keys for your project. File watcher is active, so there is
 no need to reload/restart Traefik.
 
 After that, you can use Docker files from the folder `./templates/project/` for your project.
@@ -186,22 +188,35 @@ consistent. though, as you can see, all applications use the same database conta
 You can get some ideas from here and create own infrastructures. But do not try using this infrastructure 'as is'
 in production!
 
-## Upgrade infrastructure ##
+## Minor infrastructure upgrades ##
 
 ```bash
-cd /misc/apps/dockerizer_for_php
+cd ${PROJECTS_ROOT_DIR}dockerizer_for_php/ || exit
 git config core.fileMode false
 git pull origin master
+rm -rf ./vendor/*
+composer install
 
-cd /misc/apps/docker_infrastructure/
+cd ${PROJECTS_ROOT_DIR}docker_infrastructure/ || exit
 git config core.fileMode false
-git pull origin master
-cd local_infrastructure/
+cd ./local_infrastructure/
 docker-compose down
+git stash
+git pull origin master
+git stash pop
 docker-compose up -d --force-recreate
 ```
 
-After this restart your compositions.
+Restart your compositions after that if needed.
+
+
+## Infrastructure v1.x to v2 migration ##
+
+Pull changes from the `master` branch and use BASH the script `./local_infrastructure/migration/migrate_1.x-2.0.sh` to upgrade:
+
+```bash
+bash ./local_infrastructure/migration/migrate_1.x-2.0.sh
+```
 
 
 ## TODO ##
