@@ -25,18 +25,17 @@ git pull origin master
 rm -rf vendor/*
 composer install
 
-cd ${PROJECTS_ROOT_DIR}docker_infrastructure/ || exit
+cd ${PROJECTS_ROOT_DIR}docker_infrastructure/local_infrastructure/ || exit
 # Stop infrastructure
 docker-compose down
+cd ..
 git config core.fileMode false
 git reset --hard HEAD
 git pull origin master
-
 cd ./local_infrastructure/ || exit
 
 # Create external docker network
-echo "
-127.0.0.1 traefik.docker.local" | sudo tee -a /etc/hosts
+echo "127.0.0.1 traefik.docker.local" | sudo tee -a /etc/hosts
 
 # Start infrastructure to create volumes
 docker-compose up -d --force-recreate --build
@@ -90,7 +89,6 @@ rm -rf ./traefik_rules
 sudo rm -rf ./mariadb10*
 sudo rm -rf ./mysql5*
 
-printf "\033[32;1m"
 echo "/**********************
 *
 *    Migration Completed!
@@ -98,6 +96,8 @@ echo "/**********************
 *    Infrastructure URLS (open and save these URLs to bookmarks):
 *    - Docker dashboard URL - http://traefik.docker.local/
 *    - phpMyAdmin URL - http://phpmyadmin.docker.local/
+*
+*    Please, close all applications and reboot!
 *
 \**********************
 "
