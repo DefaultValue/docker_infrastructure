@@ -27,13 +27,13 @@ services:
       - traefik.enable=true
       # HTTP
       - traefik.http.routers.example.com-http.rule=Host(`example.com`,`wwww.example.com`,`example-2.com`,`www.example-2.com`)
-      - traefik.http.routers.example.com-http.entrypoints=web
+      - traefik.http.routers.example.com-http.entrypoints=http
       - traefik.http.routers.example.com-http.service=example-service-unsecure
 #?      - traefik.http.services.example-service-unsecure.loadbalancer.server.port=80
 #?      - traefik.http.services.example-service-unsecure.loadbalancer.server.scheme=http
       # HTTPS
       - traefik.http.routers.example.com-https.rule=Host(`example.com`,`wwww.example.com`,`example-2.com`,`www.example-2.com`)
-      - traefik.http.routers.example.com-https.entrypoints=websecure
+      - traefik.http.routers.example.com-https.entrypoints=https
       - traefik.http.routers.example.com-https.tls=true
       - traefik.http.routers.example.com-https.service=example-service
 #?      - traefik.http.services.example-service.loadbalancer.server.port=443

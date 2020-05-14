@@ -1,4 +1,4 @@
 [http.routers.dashboard]
   rule = "Host(`traefik.docker.local`)"
   service = "api@internal"
-  entryPoints = ["web"]
+  entryPoints = ["http"]

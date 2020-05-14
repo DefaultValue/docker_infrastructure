@@ -103,7 +103,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.phpmyadmin-http.rule=Host(`phpmyadmin.docker.local`)
-      - traefik.http.routers.phpmyadmin-http.entrypoints=web
+      - traefik.http.routers.phpmyadmin-http.entrypoints=http
     network_mode: bridge
     depends_on:
       - reverse-proxy
