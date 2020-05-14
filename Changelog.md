@@ -14,6 +14,7 @@ See [Readme.md](https://github.com/DefaultValue/dockerizer_for_php/blob/master/R
 ### Changed
 
 - Moved to Traefik 2.2
+- Model all Dockerfiles to [DockerHub](https://hub.docker.com/repository/docker/defaultvalue/php)
 
 
 ## [1.0.1] - 2019-Nov-06

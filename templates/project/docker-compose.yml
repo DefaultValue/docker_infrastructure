@@ -10,15 +10,8 @@ version: '3.7'
 services:
   php-apache:
     container_name: example.com
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
-      args:
-        # needed for the build stage
-        # Install memcached inside container if needed. Better to use external Memcached container and only have
-        # php extension to connect to it
-        - MEMCACHED=0
-        - DEVELOPER_MODE=1 # needed for the build stage. @TODO: remove
+    # EXECUTION_ENVIRONMENT - 'development' or 'production'
+    image: defaultvalue/php:version-${EXECUTION_ENVIRONMENT}
     user: docker:docker
     sysctls:
       - net.ipv4.ip_unprivileged_port_start=0

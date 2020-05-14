@@ -13,10 +13,12 @@ fi
 
 export PROJECTS_ROOT_DIR=/misc/apps/
 export SSL_CERTIFICATES_DIR=/misc/share/ssl/
+export EXECUTION_ENVIRONMENT=development
 
 echo "
 export PROJECTS_ROOT_DIR=/misc/apps/
-export SSL_CERTIFICATES_DIR=/misc/share/ssl/" >> ~/.bash_aliases
+export SSL_CERTIFICATES_DIR=/misc/share/ssl/
+export EXECUTION_ENVIRONMENT=development" >> ~/.bash_aliases
 
 cd ${PROJECTS_ROOT_DIR}dockerizer_for_php/ || exit
 git config core.fileMode false

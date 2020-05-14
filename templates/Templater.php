@@ -1,4 +1,18 @@
 <?php
+/**
+* Dockerhub build settings:
+* templates/php/5.6/development.Dockerfile > 5.6-development
+* templates/php/5.6/production.Dockerfile > 5.6-production
+* templates/php/7.0/development.Dockerfile > 7.0-development
+* templates/php/7.0/production.Dockerfile > 7.0-production
+* templates/php/7.1/development.Dockerfile > 7.1-development
+* templates/php/7.1/production.Dockerfile > 7.1-production
+* templates/php/7.2/development.Dockerfile > 7.2-development
+* templates/php/7.2/production.Dockerfile > 7.2-production
+* templates/php/7.3/development.Dockerfile > 7.3-development
+* templates/php/7.3/production.Dockerfile > 7.3-production
+*/
+
 declare(strict_types=1);
 
 chdir(__DIR__);
@@ -47,7 +61,22 @@ BASH
      */
     public function refreshDockerTemplates(): void
     {
-        if (!$template = file_get_contents('./project/docker/Dockerfile')) {
+        $templateFiles = [
+            './php/dockerfiles/development/Dockerfile',
+            './php/dockerfiles/production/Dockerfile'
+        ];
+
+        foreach ($templateFiles as $templateFile) {
+            $this->processFile($templateFile);
+        }
+    }
+
+    /**
+     * @param string $templateFile
+     */
+    private function processFile(string $templateFile): void
+    {
+        if (!$templateFileContent = file_get_contents($templateFile)) {
             throw new RuntimeException('Template file not found!');
         }
 
@@ -62,14 +91,17 @@ BASH
                 '{{xdebug_version}}' => $settings['xdebug_version'] ?? ''
             ];
 
-            $dockerfile = str_replace(array_keys($replacement), array_values($replacement), $template);
+            $content = str_replace(array_keys($replacement), array_values($replacement), $templateFileContent);
             $savePath = "./php/$phpVersion";
+            $dockerfilePath = array_reverse(explode('/', $templateFile));
+            // This was PHPStorm recognizes files as Dockerfile
+            $dockerfile = $dockerfilePath[1] . '.' . $dockerfilePath[0];
 
             if (!is_dir($savePath) && !mkdir($savePath)) {
                 throw new RuntimeException('Can not create folder to save template !');
             }
 
-            file_put_contents("$savePath/Dockerfile", $dockerfile);
+            file_put_contents("$savePath/$dockerfile", $content);
         }
     }
 }
