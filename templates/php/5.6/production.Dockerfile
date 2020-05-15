@@ -24,7 +24,7 @@ RUN apt-get update \
     && pear install MIME_Type
 
 RUN apt-get install -y memcached libmemcached-dev \
-    && pecl install memcached-2.2.0 \
+    && printf "\n" | pecl install memcached-2.2.0 \
     && docker-php-ext-enable memcached ; \
 
 RUN rm -r /var/lib/apt/lists/*

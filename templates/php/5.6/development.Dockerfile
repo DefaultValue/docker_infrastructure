@@ -24,7 +24,7 @@ RUN apt-get update \
     && pear install MIME_Type
 
 RUN apt-get install -y memcached libmemcached-dev \
-    && pecl install memcached-2.2.0 \
+    && printf "\n" | pecl install memcached-2.2.0 \
     && docker-php-ext-enable memcached ; \
 
 RUN rm -r /var/lib/apt/lists/*
@@ -72,7 +72,6 @@ RUN docker-php-ext-install opcache ; \
     && echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
     && echo "opcache.max_accelerated_files=20000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
-# Grunt uses PHP :( So need to install it for dev env. Let's for now orient on DEVELOPER_MODE variable for now
 # Grunt uses Magento 2 CLI commands. Need to install it for development
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install nodejs -y \
