@@ -46,19 +46,23 @@ docker-compose up -d --force-recreate --build
 echo "Starting data importing..."
 
 echo "Import data for MySQL56..."
-sudo docker cp mysql56_databases/. mysql56:/var/lib/mysql
+sudo docker cp ./mysql56_databases/. mysql56:/var/lib/mysql
+sudo rm -rf ./mysql56_databases/
 echo "Import data for MySQL56 completed"
 
 echo "Import data for MySQL57..."
-sudo docker cp mysql57_databases/. mysql57:/var/lib/mysql
+sudo docker cp ./mysql57_databases/. mysql57:/var/lib/mysql
+sudo rm -rf ./mysql57_databases/
 echo "Import data for MySQL57 completed"
 
 echo "Import data for MariaDB101..."
-sudo docker cp mariadb101_databases/data/. mariadb101:/bitnami/mariadb/data/
+sudo docker cp ./mariadb101_databases/data/. mariadb101:/bitnami/mariadb/data/
+sudo rm -rf ./mariadb101_databases/
 echo "Import data for MariaDB101 completed"
 
 echo "Import data for MariaDB103..."
-sudo docker cp mariadb103_databases/data/. mariadb103:/bitnami/mariadb/data/
+sudo docker cp ./mariadb103_databases/data/. mariadb103:/bitnami/mariadb/data/
+sudo rm -rf ./mariadb103_databases/
 echo "Import data for MariaDB103 completed"
 
 echo "All imports completed"
@@ -88,8 +92,6 @@ docker-compose down
 docker-compose up -d
 
 rm -rf ./traefik_rules
-sudo rm -rf ./mariadb10*
-sudo rm -rf ./mysql5*
 
 echo "/**********************
 *
