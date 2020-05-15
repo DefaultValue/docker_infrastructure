@@ -19,7 +19,6 @@ services:
     ports:
       - 80:80
       - 443:443
-      - 8080:8080 # The Web UI
       - 35729:35729 # livereload HTTPS port
       - 35730:35730 # livereload HTTP port
     volumes:

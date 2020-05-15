@@ -25,7 +25,7 @@ RUN apt-get update \
 
 RUN apt-get install -y memcached libmemcached-dev \
     && printf "\n" | pecl install memcached-2.2.0 \
-    && docker-php-ext-enable memcached ; \
+    && docker-php-ext-enable memcached
 
 RUN rm -r /var/lib/apt/lists/*
 
@@ -75,7 +75,7 @@ RUN docker-php-ext-install opcache ; \
 # Grunt uses Magento 2 CLI commands. Need to install it for development
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt-get install nodejs -y \
-    && npm install -g grunt-cli ;
+    && npm install -g grunt-cli
 
 RUN a2enmod rewrite proxy proxy_http ssl headers expires
 

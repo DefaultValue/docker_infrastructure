@@ -25,7 +25,7 @@ RUN apt-get update \
 
 RUN apt-get install -y memcached libmemcached-dev \
     && printf "\n" | pecl install memcached-2.2.0 \
-    && docker-php-ext-enable memcached ; \
+    && docker-php-ext-enable memcached
 
 RUN rm -r /var/lib/apt/lists/*
 

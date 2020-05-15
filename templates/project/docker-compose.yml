@@ -12,6 +12,10 @@ services:
     container_name: example.com
     # EXECUTION_ENVIRONMENT - 'development' or 'production'
     image: defaultvalue/php:version-${EXECUTION_ENVIRONMENT}
+    # In case you need your own Dockerfile
+    #build:
+    #  context: .
+    #  dockerfile: docker/Dockerfile
     user: docker:docker
     sysctls:
       - net.ipv4.ip_unprivileged_port_start=0
