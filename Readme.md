@@ -19,6 +19,13 @@ by the [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu
 commands and what the tool does.
 
 
+## Caution! ##
+
+These images are from the [2.0-development](https://github.com/DefaultValue/docker_infrastructure/tree/2.0-development) branch
+and work with the [Dockerizer for PHP v2](https://github.com/DefaultValue/dockerizer_for_php/tree/2.0-develop).
+The code is tested to work and will be released in 2-3 days (around  18.05.2020). Meanwhile, you can use v2 branches of these two repositories.
+
+
 ## Local infrastructure ##
 
 Local development infrastructure consists of:
