@@ -1,5 +1,3 @@
 .DS_Store
 .idea/*
-/local_infrastructure/mysql*
-/local_infrastructure/mariadb*
-/local_infrastructure/traefik_rules/rules.toml
+/local_infrastructure/configuration/certificates.toml

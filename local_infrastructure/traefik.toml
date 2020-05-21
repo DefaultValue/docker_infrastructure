@@ -1,30 +1,33 @@
-#debug = false
+[global]
+  sendAnonymousUsage = false
 
-logLevel = 'INFO'
-insecureSkipVerify = true
+[log]
+  level = "WARN" #DEBUG, INFO, WARN, ERROR, FATAL, PANIC
+  format = "common"
+
+[serversTransport]
+  insecureSkipVerify = true
 
 [entryPoints]
- [entryPoints.http]
- address = ':80'
- [entryPoints.gruntHttp]
- address = ':35730'
- [entryPoints.grunt]
- address = ':35729'
- [entryPoints.grunt.tls]
-#    [entryPoints.http.redirect]
-#    entryPoint = “https”
- [entryPoints.https]
- address = ':443'
- [entryPoints.https.tls]
+  [entryPoints.http]
+    address = ":80"
 
-# This empty section is for Traefik to watch configuration changes
-# https://docs.traefik.io/configuration/backends/file/
-# fsnotify does not work when mounting files, so need to use a folder here - https://github.com/containous/traefik/issues/595
-[file]
-directory = "/traefik_rules/"
-watch = true
+  [entryPoints.https]
+    address = ":443"
 
-[retry]
+  [entryPoints.livereload-https]
+    address = ":35729"
 
-#[docker]
-exposedByDefault = false
+  [entryPoints.livereload-http]
+    address = ":35730"
+
+[providers]
+  [providers.file]
+    directory = "/configuration/"
+    watch = true
+
+  [providers.docker]
+    exposedbydefault = false
+
+[api]
+  dashboard = true
