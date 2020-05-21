@@ -29,9 +29,10 @@ The code is tested to work and will be released in 2-3 days (around  18.05.2020)
 ## Local infrastructure ##
 
 Local development infrastructure consists of:
-1) Traefik reverse-proxy with dashboard - [link](http://traefik.docker.local)
+1) Traefik reverse-proxy with dashboard - [http://traefik.docker.local](http://traefik.docker.local)
 2) MySQL 5.6 and 5.7, MariaDB 10.1 and 10.3 containers
-3) phpMyAdmin - [link](http://phpmyadmin.docker.local)
+3) phpMyAdmin - [http://phpmyadmin.docker.local](http://phpmyadmin.docker.local)
+4) Mailhog - [http://localhost:8025](http://localhost:8025)
 
 Default Docker network `bridge` is used for all communications.
 
