@@ -12,10 +12,14 @@ services:
     container_name: example.com
     # EXECUTION_ENVIRONMENT - 'development' or 'production'
     image: defaultvalue/php:version-${EXECUTION_ENVIRONMENT}
-    # In case you need your own Dockerfile
-    #build:
-    #  context: .
-    #  dockerfile: docker/Dockerfile
+    # In case you need your own Dockerfile. Dockerfile example:
+    # ARG EXECUTION_ENVIRONMENT
+    # FROM defaultvalue/php:7.3-${EXECUTION_ENVIRONMENT}
+#    build:
+#      context: .
+#      dockerfile: docker/Dockerfile
+#      args:
+#        - EXECUTION_ENVIRONMENT=${EXECUTION_ENVIRONMENT}
     user: docker:docker
     sysctls:
       - net.ipv4.ip_unprivileged_port_start=0
