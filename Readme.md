@@ -43,11 +43,11 @@ All infrastructure is cloned and launched by the `Ubuntu post-installation scrip
 ```bash
 mkdir -p ~/misc/apps ~/misc/certs ~/misc/db
 cd ~/misc/apps && git clone git@github.com:DefaultValue/ubuntu_post_install_scripts.git
-printf '\nexport PROJECTS_ROOT_DIR=${HOME}/misc/certs/' >> ~/.bash_aliases
+printf '\nexport PROJECTS_ROOT_DIR=${HOME}/misc/apps/' >> ~/.bash_aliases
 printf '\nexport SSL_CERTIFICATES_DIR=${HOME}/misc/certs/' >> ~/.bash_aliases
 printf '\nexport EXECUTION_ENVIRONMENT=development' >> ~/.bash_aliases
 
-export PROJECTS_ROOT_DIR=${HOME}/misc/certs/
+export PROJECTS_ROOT_DIR=${HOME}/misc/apps/
 export SSL_CERTIFICATES_DIR=${HOME}/misc/certs/
 export EXECUTION_ENVIRONMENT=development
 
