@@ -37,7 +37,8 @@ git pull origin master
 cd ./local_infrastructure/ || exit
 
 # Create external docker network
-echo "127.0.0.1 traefik.docker.local" | sudo tee -a /etc/hosts
+echo "
+127.0.0.1 traefik.docker.local" | sudo tee -a /etc/hosts
 
 # Start infrastructure to create volumes
 docker-compose up -d --force-recreate --build
