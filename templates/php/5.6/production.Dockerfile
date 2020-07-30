@@ -34,7 +34,7 @@ RUN docker-php-ext-configure \
   gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
+RUN docker-php-ext-install gd intl pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
