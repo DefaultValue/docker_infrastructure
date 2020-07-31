@@ -1,4 +1,4 @@
-FROM php:{{php_version}}-apache-stretch
+FROM php:{{php_version}}-apache-{{debian_release}}
 
 # Install packages
 RUN apt-get update \
@@ -26,8 +26,6 @@ RUN apt-get update \
 RUN apt-get install -y memcached libmemcached-dev \
     && pecl install memcached \
     && docker-php-ext-enable memcached
-
-{{additional_run}}
 
 RUN rm -r /var/lib/apt/lists/*
 

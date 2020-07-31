@@ -201,7 +201,7 @@ docker-compose up -d --force-recreate
 Restart your compositions after that if needed.
 
 
-## Infrastructure v1.x to v2 migration ##
+## Infrastructure migration from v1.x to v2.x ##
 
 Pull changes from the `master` branch and use BASH the script `./local_infrastructure/migration/migrate_1.x-2.0.sh` to upgrade:
 

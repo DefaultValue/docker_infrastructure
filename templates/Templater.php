@@ -1,16 +1,18 @@
 <?php
 /**
-* Dockerhub build settings:
-* templates/php/5.6/development.Dockerfile > 5.6-development
-* templates/php/5.6/production.Dockerfile > 5.6-production
-* templates/php/7.0/development.Dockerfile > 7.0-development
-* templates/php/7.0/production.Dockerfile > 7.0-production
-* templates/php/7.1/development.Dockerfile > 7.1-development
-* templates/php/7.1/production.Dockerfile > 7.1-production
-* templates/php/7.2/development.Dockerfile > 7.2-development
-* templates/php/7.2/production.Dockerfile > 7.2-production
-* templates/php/7.3/development.Dockerfile > 7.3-development
-* templates/php/7.3/production.Dockerfile > 7.3-production
+ * Dockerhub build settings:
+ * templates/php/5.6/development.Dockerfile > 5.6-development
+ * templates/php/5.6/production.Dockerfile > 5.6-production
+ * templates/php/7.0/development.Dockerfile > 7.0-development
+ * templates/php/7.0/production.Dockerfile > 7.0-production
+ * templates/php/7.1/development.Dockerfile > 7.1-development
+ * templates/php/7.1/production.Dockerfile > 7.1-production
+ * templates/php/7.2/development.Dockerfile > 7.2-development
+ * templates/php/7.2/production.Dockerfile > 7.2-production
+ * templates/php/7.3/development.Dockerfile > 7.3-development
+ * templates/php/7.3/production.Dockerfile > 7.3-production
+ * templates/php/7.4/development.Dockerfile > 7.4-development
+ * templates/php/7.4/production.Dockerfile > 7.4-production
 */
 
 declare(strict_types=1);
@@ -19,13 +21,18 @@ chdir(__DIR__);
 
 class Templater
 {
+    /**
+     * xDebug versions compatibility: https://xdebug.org/docs/compat
+     * @var array $versionSpecificConfig
+     */
     private $versionSpecificConfig = [
         '7.0' => [
             'additional_libs' => [
                 'libmcrypt-dev'
             ],
             'additional_modules' => 'bcmath mcrypt',
-            'xdebug_version' => '-2.6.0'
+            'debian_release' => 'stretch',
+            'xdebug_version' => '-2.7.2'
         ],
         // Includes Magento 2.3.2 fix for libsodium lib requirements https://github.com/magento/magento2/issues/23405#issuecomment-506725788
         '7.1' => [
@@ -33,26 +40,21 @@ class Templater
                 'libmcrypt-dev'
             ],
             'additional_modules' => 'bcmath mcrypt sockets',
-            'additional_run' => <<<BASH
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev ; \
-    pecl install -f libsodium-1.0.17
-BASH
+            'debian_release' => 'buster',
+            'xdebug_version' => '-2.9.5'
         ],
         '7.2' => [
             'additional_modules' => 'bcmath sodium sockets',
-            'additional_run' => <<<BASH
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev
-BASH
-
+            'debian_release' => 'buster',
+            'xdebug_version' => '-2.9.5'
         ],
         '7.3' => [
             'additional_modules' => 'bcmath sodium sockets',
-            'additional_run' => <<<BASH
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev
-BASH
+            'debian_release' => 'buster',
+        ],
+        '7.4' => [
+            'additional_modules' => 'bcmath sodium sockets',
+            'debian_release' => 'buster',
         ],
     ];
 
@@ -82,12 +84,12 @@ BASH
 
         foreach ($this->versionSpecificConfig as $phpVersion => $settings) {
             $replacement = [
-                '{{php_version}}' => $phpVersion,
                 '{{additional_libs}}' => isset($settings['additional_libs'])
                     ? implode(' ', $settings['additional_libs'])
                     : '',
                 '{{additional_modules}}' => $settings['additional_modules'] ?? '',
-                '{{additional_run}}' => $settings['additional_run'] ?? '',
+                '{{debian_release}}' => $settings['debian_release'],
+                '{{php_version}}' => $phpVersion,
                 '{{xdebug_version}}' => $settings['xdebug_version'] ?? ''
             ];
 

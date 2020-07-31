@@ -1,4 +1,4 @@
-FROM php:7.1-apache-stretch
+FROM php:7.1-apache-buster
 
 # Install packages
 RUN apt-get update \
@@ -26,10 +26,6 @@ RUN apt-get update \
 RUN apt-get install -y memcached libmemcached-dev \
     && pecl install memcached \
     && docker-php-ext-enable memcached
-
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev ; \
-    pecl install -f libsodium-1.0.17
 
 RUN rm -r /var/lib/apt/lists/*
 
