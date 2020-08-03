@@ -17,7 +17,7 @@ RUN apt-get update \
         librecode0 \
         librecode-dev \
         libzip-dev \
-         \
+        libsodium-dev \
             --no-install-recommends \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
@@ -30,11 +30,10 @@ RUN apt-get install -y memcached libmemcached-dev \
 RUN rm -r /var/lib/apt/lists/*
 
 # Configure PHP extentions
-RUN docker-php-ext-configure \
-  gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath sodium sockets
+RUN docker-php-ext-install gd intl pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath sodium sockets
 
 RUN pecl install xdebug ; \
     docker-php-ext-enable xdebug ; \

@@ -30,11 +30,10 @@ RUN apt-get install -y memcached libmemcached-dev \
 RUN rm -r /var/lib/apt/lists/*
 
 # Configure PHP extentions
-RUN docker-php-ext-configure \
-  gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
+RUN docker-php-ext-install gd intl pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath mcrypt recode
 
 RUN pecl install xdebug-2.7.2 ; \
     docker-php-ext-enable xdebug ; \

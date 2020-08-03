@@ -30,8 +30,9 @@ class Templater
             'additional_libs' => [
                 'libmcrypt-dev'
             ],
-            'additional_modules' => 'bcmath mcrypt',
+            'additional_modules' => 'bcmath mcrypt recode',
             'debian_release' => 'stretch',
+            'gd_options' => '--with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/',
             'xdebug_version' => '-2.7.2'
         ],
         // Includes Magento 2.3.2 fix for libsodium lib requirements https://github.com/magento/magento2/issues/23405#issuecomment-506725788
@@ -39,22 +40,35 @@ class Templater
             'additional_libs' => [
                 'libmcrypt-dev'
             ],
-            'additional_modules' => 'bcmath mcrypt sockets',
+            'additional_modules' => 'bcmath mcrypt recode sockets',
             'debian_release' => 'buster',
+            'gd_options' => '--with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/',
             'xdebug_version' => '-2.9.5'
         ],
         '7.2' => [
-            'additional_modules' => 'bcmath sodium sockets',
+            'additional_libs' => [
+                'libsodium-dev'
+            ],
+            'additional_modules' => 'bcmath sodium recode sockets',
             'debian_release' => 'buster',
+            'gd_options' => '--with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/',
             'xdebug_version' => '-2.9.5'
         ],
         '7.3' => [
-            'additional_modules' => 'bcmath sodium sockets',
+            'additional_libs' => [
+                'libsodium-dev'
+            ],
+            'additional_modules' => 'bcmath sodium recode sockets',
             'debian_release' => 'buster',
+            'gd_options' => '--with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/',
         ],
         '7.4' => [
+            'additional_libs' => [
+                'libsodium-dev'
+            ],
             'additional_modules' => 'bcmath sodium sockets',
             'debian_release' => 'buster',
+            'gd_options' => '--with-freetype --with-jpeg',
         ],
     ];
 
@@ -89,6 +103,7 @@ class Templater
                     : '',
                 '{{additional_modules}}' => $settings['additional_modules'] ?? '',
                 '{{debian_release}}' => $settings['debian_release'],
+                '{{gd_options}}' => $settings['gd_options'],
                 '{{php_version}}' => $phpVersion,
                 '{{xdebug_version}}' => $settings['xdebug_version'] ?? ''
             ];

@@ -17,7 +17,7 @@ RUN apt-get update \
         librecode0 \
         librecode-dev \
         libzip-dev \
-         \
+        libsodium-dev \
             --no-install-recommends \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
@@ -30,11 +30,10 @@ RUN apt-get install -y memcached libmemcached-dev \
 RUN rm -r /var/lib/apt/lists/*
 
 # Configure PHP extentions
-RUN docker-php-ext-configure \
-  gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath sodium sockets
+RUN docker-php-ext-install gd intl pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath sodium recode sockets
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
