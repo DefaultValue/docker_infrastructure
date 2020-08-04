@@ -196,6 +196,8 @@ git stash
 git pull origin master
 git stash pop
 docker-compose up -d --force-recreate
+
+docker image prune -af
 ```
 
 Restart your compositions after that if needed.
