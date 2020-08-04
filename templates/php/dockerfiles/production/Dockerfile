@@ -33,7 +33,7 @@ RUN rm -r /var/lib/apt/lists/*
 RUN docker-php-ext-configure gd {{gd_options}}
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pcntl pdo_mysql recode soap xml xmlrpc xsl zip {{additional_modules}}
+RUN docker-php-ext-install gd intl pcntl pdo_mysql soap xml xmlrpc xsl zip {{additional_modules}}
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
