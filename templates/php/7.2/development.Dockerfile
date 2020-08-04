@@ -1,4 +1,4 @@
-FROM php:7.2-apache-stretch
+FROM php:7.2-apache-buster
 
 # Install packages
 RUN apt-get update \
@@ -17,7 +17,7 @@ RUN apt-get update \
         librecode0 \
         librecode-dev \
         libzip-dev \
-         \
+        libsodium-dev \
             --no-install-recommends \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
@@ -27,19 +27,15 @@ RUN apt-get install -y memcached libmemcached-dev \
     && pecl install memcached \
     && docker-php-ext-enable memcached
 
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list ; \
-    apt-get update && apt-get -t stretch-backports install -y libsodium-dev
-
 RUN rm -r /var/lib/apt/lists/*
 
 # Configure PHP extentions
-RUN docker-php-ext-configure \
-  gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pdo_mysql recode soap xml xmlrpc xsl zip bcmath sodium sockets
+RUN docker-php-ext-install gd intl pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath sodium recode sockets
 
-RUN pecl install xdebug ; \
+RUN pecl install xdebug-2.9.5 ; \
     docker-php-ext-enable xdebug ; \
     echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
     && echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \

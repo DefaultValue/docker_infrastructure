@@ -5,10 +5,16 @@ volumes:
     name: MySql56-Volume
   mysql57_volume:
     name: MySql57-Volume
+  mysql80_volume:
+    name: MySql80-Volume
   mariadb101_volume:
     name: MariaDB101-Volume
+  mariadb102_volume:
+    name: MariaDB102-Volume
   mariadb103_volume:
     name: MariaDB103-Volume
+  mariadb104_volume:
+    name: MariaDB104-Volume
 
 services:
   reverse-proxy:
@@ -61,6 +67,23 @@ services:
       - mysql57_volume:/var/lib/mysql
       - ./my.cnf:/etc/my.cnf
 
+  mysql80:
+    container_name: mysql80
+    image: mysql:8.0
+    restart: always
+    labels:
+      - traefik.enable=false
+    network_mode: bridge
+    ports:
+      - 3380:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=root
+      - MYSQL_PASS=root
+    volumes:
+      - mysql80_volume:/var/lib/mysql
+      - ./my.cnf:/etc/my.cnf
+
   mariadb101:
     container_name: mariadb101
     image: bitnami/mariadb:10.1
@@ -76,6 +99,23 @@ services:
       - MARIADB_ROOT_PASSWORD=root
     volumes:
       - mariadb101_volume:/bitnami/mariadb
+      - ./my.cnf:/etc/my.cnf
+
+  mariadb102:
+    container_name: mariadb102
+    image: bitnami/mariadb:10.2
+    user: root
+    restart: always
+    labels:
+      - traefik.enable=false
+    network_mode: bridge
+    ports:
+      - 33102:3306
+    environment:
+      - MARIADB_ROOT_USER=root
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - mariadb102_volume:/bitnami/mariadb
       - ./my.cnf:/etc/my.cnf
 
   mariadb103:
@@ -95,6 +135,23 @@ services:
       - mariadb103_volume:/bitnami/mariadb
       - ./my.cnf:/etc/my.cnf
 
+  mariadb104:
+    container_name: mariadb104
+    image: bitnami/mariadb:10.4
+    user: root
+    restart: always
+    labels:
+      - traefik.enable=false
+    network_mode: bridge
+    ports:
+      - 33104:3306
+    environment:
+      - MARIADB_ROOT_USER=root
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      - mariadb104_volume:/bitnami/mariadb
+      - ./my.cnf:/etc/my.cnf
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
@@ -108,15 +165,21 @@ services:
       - reverse-proxy
       - mysql56
       - mysql57
+      - mysql80
       - mariadb101
+      - mariadb102
       - mariadb103
+      - mariadb104
     links:
       - mysql56:mysql56
       - mysql57:mysql57
+      - mysql80:mysql80
       - mariadb101:mariadb101
+      - mariadb102:mariadb102
       - mariadb103:mariadb103
+      - mariadb104:mariadb104
     environment:
-      - PMA_HOSTS=mysql57,mysql56,mariadb101,mariadb103
+      - PMA_HOSTS=mysql57,mysql80,mysql56,mariadb101,mariadb102,mariadb103,mariadb104
       - PMA_USER=root
       - PMA_PASSWORD=root
       - PMA_ABSOLUTE_URI=http://phpmyadmin.docker.local/
