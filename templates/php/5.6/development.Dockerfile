@@ -34,7 +34,7 @@ RUN docker-php-ext-configure \
   gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
+RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
 
 # start compiling xDebug from source - https://github.com/docker-library/php/issues/133#issuecomment-488030185
 RUN BEFORE_PWD=$(pwd) \

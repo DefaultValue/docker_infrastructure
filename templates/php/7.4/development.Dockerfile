@@ -33,7 +33,7 @@ RUN rm -r /var/lib/apt/lists/*
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath sodium sockets
+RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath sodium sockets
 
 RUN pecl install xdebug ; \
     docker-php-ext-enable xdebug ; \
