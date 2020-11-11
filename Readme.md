@@ -120,9 +120,34 @@ not TCP/IP. In the PHP apps use `127.0.0.1:3356` or `127.0.0.1:3357` for PDO con
 MySQL host name inside your application containers in `mysql` by default. It is determined by the external links in
 the `docker-compose.yml` file.
 
-We strongly recommend using separate user name and password for every database like in the real world. But remember
+We strongly recommend using separate user name and password for every database like in the real world. Remember
 that MySQL and Application containers are different servers. Be sure to allow connection from the application host
 or (easier) use `'username'@'%'` to allow connection from any IP. See the security concerns below.
+
+
+## mysqldump ##
+
+Since all database servers are inside the Docker containers, native `mysqldump` utility from inside the container must be used. The general idea is that:
+
+- a new dump is created inside the container;
+- dump file is copied from container to the host filesystem;
+- dump is deleted from the container to free up space.
+
+Example creating a *compressed* database dump:
+
+```bash
+docker exec -it mysql57 sh -c "mysqldump -u<user> -p <db_name> --no-tablespaces | gzip > /tmp/db.sql.gz"
+docker <container> cp mysql57:/tmp/db.sql.gz db.sql.gz
+docker exec -it mysql57 rm /tmp/db.sql.gz
+```
+
+Example creating an *uncompressed* DB dump:
+
+```bash
+docker exec -it mysql57 sh -c "mysqldump -u<user> -p <db_name> --no-tablespaces > /tmp/db.sql"
+docker container cp mysql57:/tmp/db.sql db.sql
+docker exec -it mysql57 rm /tmp/db.sql
+```
 
 
 ## xDebug ##
