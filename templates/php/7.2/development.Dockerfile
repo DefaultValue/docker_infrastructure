@@ -63,7 +63,7 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 
 RUN a2enmod rewrite proxy proxy_http ssl headers expires
 
-RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1
 
 # Install mhsendmail - Sendmail replacement for Mailhog
 RUN curl -Lsf 'https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - ; \

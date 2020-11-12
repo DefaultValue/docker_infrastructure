@@ -50,7 +50,7 @@ RUN docker-php-ext-install opcache ; \
 
 RUN a2enmod rewrite proxy proxy_http ssl headers expires
 
-RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1
 
 # Must use the same UID/GUI as on the local system for the shared files to be editable on both systems
 RUN groupadd -g 1000 docker && useradd -u 1000 -g docker -m docker ; \
