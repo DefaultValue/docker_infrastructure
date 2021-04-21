@@ -37,12 +37,14 @@ RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql soap xml xmlrpc xsl zi
 
 RUN pecl install xdebug ; \
     docker-php-ext-enable xdebug ; \
-    echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.show_error_trace=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.max_nesting_level=256" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
     cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
     echo 'memory_limit=2048M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
@@ -57,13 +59,11 @@ RUN docker-php-ext-install opcache ; \
     && echo "opcache.max_accelerated_files=20000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
 # Grunt uses Magento 2 CLI commands. Need to install it for development
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash - \
     && apt-get install nodejs -y \
     && npm install -g grunt-cli
 
 RUN a2enmod rewrite proxy proxy_http ssl headers expires
-
-RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1
 
 # Install mhsendmail - Sendmail replacement for Mailhog
 RUN curl -Lsf 'https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - ; \
@@ -72,5 +72,11 @@ RUN curl -Lsf 'https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz' | tar -C '/
     echo 'sendmail_path = /usr/bin/mhsendmail --smtp-addr mailhog:1025' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
 # Must use the same UID/GUI as on the local system for the shared files to be editable on both systems
-RUN groupadd -g 1000 docker && useradd -u 1000 -g docker -m docker ; \
-    su docker -c "composer global require hirak/prestissimo"
+RUN groupadd -g 1000 docker && useradd -u 1000 -g docker -m docker
+
+COPY ./docker/composer-proxy /usr/local/bin/composer
+
+RUN chmod +x /usr/local/bin/composer ; \
+    curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer1 --1 ; \
+    curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer2 ; \
+    su docker -c "composer1 global require hirak/prestissimo"

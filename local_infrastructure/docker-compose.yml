@@ -185,7 +185,7 @@ services:
 
   mailhog:
     container_name: mailhog
-    image: mailhog/mailhog:v1.0.0
+    image: mailhog/mailhog:v1.0.1
     restart: always
     network_mode: bridge
     ports:

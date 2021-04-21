@@ -1,0 +1,4 @@
+#!/bin/sh
+composerVersion="${COMPOSER_VERSION:-2}"
+composerCommand="composer${composerVersion}"
+$composerCommand "$@"

@@ -49,7 +49,7 @@ services:
       - traefik.http.routers.example-com-livereload-http.rule=Host(`example.com`,`www.example.com`,`example-2.com`,`www.example-2.com`)
       - traefik.http.routers.example-com-livereload-http.entrypoints=livereload-http
       - traefik.http.routers.example-com-livereload-http.service=example-com-livereload-http
-      - traefik.http.services.example-com-livereload-http.loadbalancer.server.port=35729
+      - traefik.http.services.example-com-livereload-http.loadbalancer.server.port=35730
       - traefik.http.services.example-com-livereload-http.loadbalancer.server.scheme=http
     # Must add extra_hosts to be written to /etc/hosts - otherwise containerized application can not curl itself
     extra_hosts:
@@ -65,6 +65,7 @@ services:
       - mailhog
     network_mode: bridge
     environment:
+      - COMPOSER_VERSION=2
       # Must be set to some of the domains for xdebug to work. Should have server configured in
       # Preferences > Language and Frameworks > PHP > Servers
       # Or just run the project with the same domain and debug enabled in the browser
