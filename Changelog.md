@@ -6,22 +6,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [2.2.0] - 2021-04-22
+
+### Added
+
+- Using COMPOSER_VERSION environment variable for PHP 7.2-7.4 images. Images new include two composer versions, v2 is default
+- Added `mysqli` extension to all containers to support Wordpress and other apps that do not use PDO
+- Added `log_bin_trust_function_creators` To MySQL config to enable creating triggers by the users without the SUPER privileges. Otherwise, Magento can't create reindex triggers
+
+### Changed
+
+- Updated xDebug to v3 for PHP 7.4
+- Increased memory limit to 3G for PHP 7.3 and 7.4 to handle `composer install` for Magento
+- Updated MySQL container settings due to the configuration changes by the vendor
+
+### Removed
+
+- Removed the `recode` extension from PHP 7.4 image
+
+
 ## [2.1.0] - 2020-08-04
 
 ### Added
 
 - New PHP 7.4 images
-- Added full collection of MySQL and MariaDB containers: + MySQL 8.0,  MariaDB 10.2 and MariaDB 10.4.
-- Added `pcntl` extension to all Dockerfiles (for example needed for multithread static content deploy in Magento 2).
+- Added full collection of MySQL and MariaDB containers: + MySQL 8.0,  MariaDB 10.2 and MariaDB 10.4
+- Added `pcntl` extension to all Dockerfiles (for example needed for multithread static content deploy in Magento 2)
 
 ### Changed
 
-- Bump PHP 7.1, 7.2 and 7.3 to Debian Buster release.
+- Bump PHP 7.1, 7.2 and 7.3 to Debian Buster release
 - Stick to xDebug 2.7.2 for PHP 7.0 and 2.9.5 for PHP 7.1 and 7.2
 
 ### Removed
 
-- Removed using custom repository for `libsodium` for PHP 7.1, 7.2 and 7.3 due to migration to Debian Buster release.
+- Removed using custom repository for `libsodium` for PHP 7.1, 7.2 and 7.3 due to migration to Debian Buster release
 
 
 ## [2.0.0] - 2020-05-21
