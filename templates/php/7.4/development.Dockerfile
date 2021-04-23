@@ -35,16 +35,14 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 # Install PHP Extensions
 RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath sodium sockets
 
-RUN pecl install xdebug ; \
+RUN pecl install xdebug-2.9.5 ; \
     docker-php-ext-enable xdebug ; \
-    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_handler=dbgp" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.show_error_trace=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.max_nesting_level=256" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.log_level=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
     cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
     echo 'memory_limit=3072M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
