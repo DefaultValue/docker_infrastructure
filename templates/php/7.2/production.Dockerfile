@@ -1,8 +1,9 @@
 FROM php:7.2-apache-buster
 
 # Install packages
-RUN apt-get update \
-    && apt-get install -y \
+RUN apt-get update ; \
+    apt-get upgrade ; \
+    apt-get install -y \
         cron \
         curl \
         git \

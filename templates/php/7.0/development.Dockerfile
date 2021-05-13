@@ -1,8 +1,9 @@
 FROM php:7.0-apache-stretch
 
 # Install packages
-RUN apt-get update \
-    && apt-get install -y \
+RUN apt-get update ; \
+    apt-get upgrade ; \
+    apt-get install -y \
         cron \
         curl \
         git \
@@ -63,8 +64,6 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
 
 RUN a2enmod rewrite proxy proxy_http ssl headers expires
 
-RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1
-
 # Install mhsendmail - Sendmail replacement for Mailhog
 RUN curl -Lsf 'https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz' | tar -C '/usr/local' -xvzf - ; \
     /usr/local/go/bin/go get github.com/mailhog/mhsendmail ; \
@@ -72,5 +71,11 @@ RUN curl -Lsf 'https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz' | tar -C '/
     echo 'sendmail_path = /usr/bin/mhsendmail --smtp-addr mailhog:1025' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
 # Must use the same UID/GUI as on the local system for the shared files to be editable on both systems
-RUN groupadd -g 1000 docker && useradd -u 1000 -g docker -m docker ; \
-    su docker -c "composer global require hirak/prestissimo"
+RUN groupadd -g 1000 docker && useradd -u 1000 -g docker -m docker
+
+COPY ./docker/composer-proxy /usr/local/bin/composer
+
+RUN chmod +x /usr/local/bin/composer ; \
+    curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer1 --1 ; \
+    curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer2 ; \
+    su docker -c "composer1 global require hirak/prestissimo"
