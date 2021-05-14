@@ -39,7 +39,7 @@ RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql recode soap xml xmlrpc
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
-    echo 'memory_limit=2048M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
+    echo 'memory_limit=3072M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
 # Will use this in production as well for now - till we do not have full CD process
 RUN docker-php-ext-install opcache ; \
