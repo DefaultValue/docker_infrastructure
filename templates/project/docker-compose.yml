@@ -39,18 +39,6 @@ services:
       - traefik.http.routers.example-com-https.service=example-com-https
       - traefik.http.services.example-com-https.loadbalancer.server.port=443
       - traefik.http.services.example-com-https.loadbalancer.server.scheme=https
-      # Develop with extension that allows setting livereload host and port - https://github.com/lokcito/livereload-extensions
-      - traefik.http.routers.example-com-livereload-https.rule=Host(`example.com`,`www.example.com`,`example-2.com`,`www.example-2.com`)
-      - traefik.http.routers.example-com-livereload-https.entrypoints=livereload-https
-      - traefik.http.routers.example-com-livereload-https.tls=true
-      - traefik.http.routers.example-com-livereload-https.service=example-com-livereload-https
-      - traefik.http.services.example-com-livereload-https.loadbalancer.server.port=35729
-      - traefik.http.services.example-com-livereload-https.loadbalancer.server.scheme=http
-      - traefik.http.routers.example-com-livereload-http.rule=Host(`example.com`,`www.example.com`,`example-2.com`,`www.example-2.com`)
-      - traefik.http.routers.example-com-livereload-http.entrypoints=livereload-http
-      - traefik.http.routers.example-com-livereload-http.service=example-com-livereload-http
-      - traefik.http.services.example-com-livereload-http.loadbalancer.server.port=35730
-      - traefik.http.services.example-com-livereload-http.loadbalancer.server.scheme=http
     # Must add extra_hosts to be written to /etc/hosts - otherwise containerized application can not curl itself
     extra_hosts:
       - "example.com www.example.com example-2.com www.example-2.com:127.0.0.1"

@@ -3,20 +3,20 @@
 This is a part of the local infrastructure project which aims to create easy to install and use environment for PHP development based on Ubuntu LTS.
 
 1. [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts) - install software,
-clone repositories with `Docker infrastructure` and `Dockerizer for PHP` tool. Infrastructure is launched automatically
-during setup and you do not need start it manually. Check this repo to get more info about what software is installed,
-where the files are located and why we think this software is needed.
+   clone repositories with `Docker infrastructure` and `Dockerizer for PHP` tool. Infrastructure is launched automatically
+   during setup and you do not need start it manually. Check this repo to get more info about what software is installed,
+   where the files are located and why we think this software is needed.
 
-2. `Docker infrastructure` (this repository) - run [Traefik](https://traefik.io/) reverse-proxy container with linked 
-MySQL 5.6, 5.7, MariaDB 10.1, 10.3, phpMyAdmin and Mailhog containers. Infrastructure is cloned and run automatically by the
-[Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Check this repository
-for more information on how the infrastructure works, how to use xDebug, LiveReload etc.
+2. `Docker infrastructure` (this repository) - run [Traefik](https://traefik.io/) reverse-proxy container with linked
+   MySQL 5.6, 5.7, MariaDB 10.1, 10.3, phpMyAdmin and Mailhog containers. Infrastructure is cloned and run automatically by the
+   [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Check this repository
+   for more information on how the infrastructure works, how to use xDebug, LiveReload etc.
 
 3. [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) - install any Magento 2 version in 1
-command. Add Docker files to your existing PHP projects in one command. This repository is cloned automatically
-by the [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Please, check
-[Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) repository to get more information on available
-commands and what the tool does.
+   command. Add Docker files to your existing PHP projects in one command. This repository is cloned automatically
+   by the [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Please, check
+   [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) repository to get more information on available
+   commands and what the tool does.
 
 
 ## Caution! ##
@@ -68,8 +68,8 @@ Better to use `Dockerizer for PHP` instead of moving and editing the files manua
 The whole infrastructure consists of the following files:
 
 - `./templates/project/docker-compose.yml` - main compose file with all services. Is used to populate environment
-files as well, so that you can upgrade project infrastructure on the dev/stating servers without affecting the
-production configuration
+  files as well, so that you can upgrade project infrastructure on the dev/stating servers without affecting the
+  production configuration
 - `./templates/project/docker-rebuild.sh` - some useful commands for Docker;
 - `./templates/project/docker-sync.yml` - for MasOS users (see the respective section at the bottom)
 - `./templates/project/docker/.htaccess` - protect the `docker` folder inside your project :)
@@ -81,7 +81,7 @@ If you want to configure the things manually (and learn how the things work):
 1) copy the whole `./templates/project` folder to your project root folder;
 
 2) pick up a suitable Dockerfile from the folder `./templates/php/` and replace the one in your project OR
-change the image name to include the appropriate PHP version;
+   change the image name to include the appropriate PHP version;
 
 3) change domains, container name etc.;
 
@@ -171,20 +171,7 @@ use external SMTP to send emails. In this case PHP may not control how the email
 
 ## LiveReload ##
 
-All containers include NodeJS and Grunt for development. Default LiveReload extension for Chrome does not support
-loading `livereload.js` from the 'remote' server. Please, build and use a forked version that supports these
-features: [LiveReload fork](https://github.com/lokcito/livereload-extensions)
-
-Grunt works over HTTPS entrypoint by default (port `35729`) and thus is compatible with HSTS (HTTP Strict Transport
-Security). Treafik proxies requests to the backend via HTTP. There are three possible cases:
-
-1) website uses HTTPS and HSTS header is present - use the default port `35729`;
-
-2) website uses HTTPS without the HSTS header - use the port `35730` and enable insecure (mixed) content for yor
-website. In Google Chrome: click the `HTTPS` icon left to the website address, enter the `Site settings` and set
-`Insecure content` to `Allow`.
-
-3) website uses HTTP - use the port `35730`.
+DEPRECATED. Use this  simple [Live Reload](https://chrome.google.com/webstore/detail/live-reload/jcejoncdonagmfohjcdgohnmecaipidc) extension instead. 
 
 
 ## For MacOS users ##

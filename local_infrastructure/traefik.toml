@@ -15,12 +15,6 @@
   [entryPoints.https]
     address = ":443"
 
-  [entryPoints.livereload-https]
-    address = ":35729"
-
-  [entryPoints.livereload-http]
-    address = ":35730"
-
 [providers]
   [providers.file]
     directory = "/configuration/"

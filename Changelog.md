@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Run `apt upgrade` before installing packages to have latest and more secure environment.
 - PHP 5.6-7.1 containers also contain two composer versions managed by the `COMPOSER_VERSION` environment variable.
 
+### Removed
+
+- Livereload configuration on ports `35729` and `35730`. Use this  simple [Live Reload](https://chrome.google.com/webstore/detail/live-reload/jcejoncdonagmfohjcdgohnmecaipidc) extension instead.
+
 
 ## [2.2.0] - 2021-04-22
 
