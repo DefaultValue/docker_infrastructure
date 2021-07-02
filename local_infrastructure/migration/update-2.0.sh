@@ -1,9 +1,12 @@
 #!/bin/bash
 
 cd ${PROJECTS_ROOT_DIR}docker_infrastructure/local_infrastructure/ || exit;
-cd ${PROJECTS_ROOT_DIR}dockerizer_for_php/ || exit;
 
+cd ${PROJECTS_ROOT_DIR}dockerizer_for_php/ || exit;
 git pull origin master
+rm -rf ./vendor/*
+composer install
+
 cd ${PROJECTS_ROOT_DIR}docker_infrastructure/
 git pull origin master
 
