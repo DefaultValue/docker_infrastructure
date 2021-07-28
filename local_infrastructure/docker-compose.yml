@@ -16,6 +16,11 @@ volumes:
   mariadb104_volume:
     name: MariaDB104-Volume
 
+networks:
+  infrastructure_network:
+    external:
+      name: infrastructure_network
+
 services:
   reverse-proxy:
     image: traefik:v2.2
@@ -37,7 +42,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 3356:3306
     environment:
@@ -53,7 +59,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 3357:3306
     environment:
@@ -69,7 +76,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 3380:3306
     environment:
@@ -86,7 +94,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 33101:3306
     environment:
@@ -103,7 +112,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 33102:3306
     environment:
@@ -120,7 +130,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 33103:3306
     environment:
@@ -137,7 +148,8 @@ services:
     restart: always
     labels:
       - traefik.enable=false
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 33104:3306
     environment:
@@ -155,7 +167,8 @@ services:
       - traefik.enable=true
       - traefik.http.routers.phpmyadmin-http.rule=Host(`phpmyadmin.docker.local`)
       - traefik.http.routers.phpmyadmin-http.entrypoints=http
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     depends_on:
       - reverse-proxy
       - mysql56
@@ -185,7 +198,8 @@ services:
     container_name: mailhog
     image: mailhog/mailhog:v1.0.1
     restart: always
-    network_mode: bridge
+    networks:
+      - infrastructure_network
     ports:
       - 1025:1025
       - 8025:8025

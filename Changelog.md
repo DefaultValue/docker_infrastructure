@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.1] - upcoming release
+## [2.3.1] - upcoming release
 
 ### Changed
 
@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Livereload configuration on ports `35729` and `35730`. Use this  simple [Live Reload](https://chrome.google.com/webstore/detail/live-reload/jcejoncdonagmfohjcdgohnmecaipidc) extension instead.
 
+## [2.3.0] - 2021-07-28
+
+### Changed
+
+- `network_mode: bridge` was changed to internal Docker network `infrastructure_network`
 
 ## [2.2.0] - 2021-04-22
 

@@ -7,6 +7,12 @@
 # For MacOS users (development only)
 # $ docker-sync-stack start
 version: '3.7'
+
+networks:
+  infrastructure:
+    external:
+      name: infrastructure_network
+
 services:
   php-apache:
     container_name: example.com
@@ -51,7 +57,8 @@ services:
     external_links:
       - mysql57:mysql
       - mailhog
-    network_mode: bridge
+    networks:
+      - infrastructure
     environment:
       - COMPOSER_VERSION=2
       # Must be set to some of the domains for xdebug to work. Should have server configured in
@@ -74,14 +81,16 @@ services:
 
 #  redis:
 #    image: redis:latest
-#    network_mode: bridge
+#    networks:
+#      - infrastructure
 #    labels:
 #      - traefik.enable=false
 #    restart: always
 
 #  memcached:
 #    image: 'memcached:1.5'
-#    network_mode: bridge
+#    networks:
+#      - infrastructure
 #    labels:
 #      - traefik.enable=false
 #    restart: always
@@ -100,4 +109,5 @@ services:
 #        soft: -1
 #        hard: -1
 #    restart: always
-#    network_mode: bridge
+#    networks:
+#      - infrastructure
