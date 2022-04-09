@@ -36,26 +36,31 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 # Install PHP Extensions
 RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath sodium sockets
 
-RUN pecl install xdebug-2.9.5 ; \
-    docker-php-ext-enable xdebug ; \
-    echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
-    cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini ; \
+RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
-    echo 'memory_limit=3072M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
+    echo 'memory_limit=3072M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo 'realpath_cache_size=10M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo 'realpath_cache_ttl=7200' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo 'pcre.jit=0' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
-# Will use this in production as well for now - till we do not have full CD process
+# Set default settigs to be sure they are correct and for demo purposes
 RUN docker-php-ext-install opcache ; \
     echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "opcache.validate_timestamps=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "opcache.revalidate_freq=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "opcache.max_wasted_percentage=10" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
-    && echo "opcache.max_accelerated_files=20000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
+    echo "opcache.validate_timestamps=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "opcache.revalidate_freq=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "opcache.max_wasted_percentage=10" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "opcache.max_accelerated_files=20000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "opcache.save_comments=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
+
+RUN pecl install xdebug-2.9.5 ; \
+    docker-php-ext-enable xdebug ; \
+    echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "xdebug.idekey=\"PHPSTORM\"" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
+    echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
 # Grunt uses Magento 2 CLI commands. Need to install it for development
 RUN curl -sL https://deb.nodesource.com/setup_15.x | bash - \
