@@ -29,7 +29,6 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install PHP Extensions
 RUN docker-php-ext-install bcmath gd intl  mysqli pcntl pdo_mysql sockets soap xsl xmlwriter zip
-#       libxml           xmlrpc
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \

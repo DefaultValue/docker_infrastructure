@@ -45,7 +45,7 @@ RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini ; \
 
 # Set default settigs to be sure they are correct and for demo purposes
 RUN docker-php-ext-install opcache ; \
-    echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
     echo "opcache.validate_timestamps=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
     echo "opcache.revalidate_freq=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
     echo "opcache.max_wasted_percentage=10" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
