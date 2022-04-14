@@ -77,5 +77,6 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && npm install -g grunt-cli
 
 # Install mhsendmail - Sendmail replacement for Mailhog
-RUN curl https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 --output /usr/bin/mhsendmail ; \
-    echo 'sendmail_path = /usr/bin/mhsendmail --smtp-addr mailhog:1025' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
+RUN curl -sL https://github.com/mailhog/mhsendmail/releases/download/v0.2.0/mhsendmail_linux_amd64 --output /usr/bin/mhsendmail ; \
+    chmod +x /usr/bin/mhsendmail ; \
+    echo 'sendmail_path="/usr/bin/mhsendmail --smtp-addr=mailhog:1025"' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
