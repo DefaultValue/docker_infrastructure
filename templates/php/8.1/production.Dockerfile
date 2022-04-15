@@ -55,7 +55,6 @@ COPY ./docker/composer-proxy /usr/local/bin/composer
 
 RUN chmod +x /usr/local/bin/composer ; \
     curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer1 --1 ; \
-    curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer2 ; \
-    su docker -c "composer1 global require hirak/prestissimo"
+    curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer2
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
