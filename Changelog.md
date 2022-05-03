@@ -5,16 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.1] - upcoming release
+## [2.2.1] - 2022.05.03
+
+Preparing to Dockerizer v3 release.
 
 ### Changed
 
 - Run `apt upgrade` before installing packages to have latest and more secure environment.
-- PHP 5.6-7.1 containers also contain two composer versions managed by the `COMPOSER_VERSION` environment variable.
+- Changed network mode to `host`, removed port mappings.
 
 ### Removed
 
 - Livereload configuration on ports `35729` and `35730`. Use this  simple [Live Reload](https://chrome.google.com/webstore/detail/live-reload/jcejoncdonagmfohjcdgohnmecaipidc) extension instead.
+- Port bindings for Traefik due to the network mode change.
 
 
 ## [2.2.0] - 2021-04-22

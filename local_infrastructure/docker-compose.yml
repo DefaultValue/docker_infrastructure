@@ -21,10 +21,7 @@ services:
     image: traefik:v2.2
     container_name: "reverse-proxy"
     restart: always
-    network_mode: bridge
-    ports:
-      - 80:80
-      - 443:443
+    network_mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./traefik.toml:/traefik.toml
@@ -186,6 +183,8 @@ services:
     image: mailhog/mailhog:v1.0.1
     restart: always
     network_mode: bridge
-    ports:
-      - 1025:1025
-      - 8025:8025
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mailhog-http.rule=Host(`mailhog.docker.local`)
+      - traefik.http.routers.mailhog-http.entrypoints=http
+      - traefik.http.services.mailhog-http.loadbalancer.server.port=8025
