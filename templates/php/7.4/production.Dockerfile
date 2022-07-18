@@ -19,22 +19,23 @@ RUN apt-get update ; \
         librecode-dev \
         libzip-dev \
         libsodium-dev \
-            --no-install-recommends \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
-    && pear install MIME_Type
-
-RUN apt-get install -y memcached libmemcached-dev \
-    && pecl install memcached \
-    && docker-php-ext-enable memcached
+        libmemcached-dev \
+        memcached \
+        --no-install-recommends
 
 RUN rm -r /var/lib/apt/lists/*
 
-# Configure PHP extentions
+RUN pear install MIME_Type
+
+RUN pecl install imagick memcached redis ; \
+    docker-php-ext-enable imagick memcached redis ; \
+    rm -rf /tmp/pear/
+
+# Configure PHP extention installation options
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql soap xml xmlrpc xsl zip bcmath sodium sockets
+RUN docker-php-ext-install bcmath gd intl mysqli pcntl pdo_mysql soap sodium sockets xml xmlrpc xsl zip
 
 RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini ; \
     echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \

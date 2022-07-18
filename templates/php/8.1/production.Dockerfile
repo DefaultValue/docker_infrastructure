@@ -22,13 +22,15 @@ RUN apt update ; \
 
 RUN rm -r /var/lib/apt/lists/*
 
-RUN pecl install imagick ; docker-php-ext-enable imagick
+RUN pecl install imagick redis ; \
+    docker-php-ext-enable imagick redis ; \
+    rm -rf /tmp/pear/
 
-# Configure PHP extentions
+# Configure PHP extention installation options
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install PHP Extensions
-RUN docker-php-ext-install bcmath gd intl  mysqli pcntl pdo_mysql sockets soap xsl xmlwriter zip
+RUN docker-php-ext-install bcmath gd intl mysqli pcntl pdo_mysql soap sockets xsl xmlwriter zip
 
 RUN echo "always_populate_raw_post_data=-1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
     echo 'memory_limit=3072M' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini ; \
