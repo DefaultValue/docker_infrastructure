@@ -10,7 +10,7 @@ This is a part of the local infrastructure project which aims to create easy to 
 2. `Docker infrastructure` (this repository) - run [Traefik](https://traefik.io/) reverse-proxy container with linked
    MySQL 5.6, 5.7, MariaDB 10.1, 10.3, phpMyAdmin and Mailhog containers. Infrastructure is cloned and run automatically by the
    [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts). Check this repository
-   for more information on how the infrastructure works, how to use xDebug, LiveReload etc.
+   for more information on how the infrastructure works, how to use xDebug, etc.
 
 3. [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) - install any Magento 2 version in 1
    command. Add Docker files to your existing PHP projects in one command. This repository is cloned automatically
@@ -19,24 +19,18 @@ This is a part of the local infrastructure project which aims to create easy to 
    commands and what the tool does.
 
 
-## Caution! ##
-
-These images are from the [2.0-development](https://github.com/DefaultValue/docker_infrastructure/tree/2.0-development) branch
-and work with the [Dockerizer for PHP v2](https://github.com/DefaultValue/dockerizer_for_php/tree/2.0-develop).
-The code is tested to work and will be released in 2-3 days (around  18.05.2020). Meanwhile, you can use v2 branches of these two repositories.
-
-
 ## Local infrastructure ##
+
+All project compositions contain containers that they need. Network traffic is proxied by the Traefik reverse-proxy (containerized).
+Docker network `host` is used for all communications.
+
+![Infrastructure schema](https://raw.githubusercontent.com/DefaultValue/docker_infrastructure/master/docker_infrastructure_schema.png)
 
 Local development infrastructure consists of:
 1) Traefik reverse-proxy with dashboard - [http://traefik.docker.local](http://traefik.docker.local)
-2) MySQL 5.6 and 5.7, MariaDB 10.1 and 10.3 containers
-3) phpMyAdmin - [http://phpmyadmin.docker.local](http://phpmyadmin.docker.local)
-4) Mailhog - [http://mailhog.docker.local](http://mailhog.docker.local)
-
-Default Docker network `bridge` is used for all communications.
-
-![Infrastructure schema](https://raw.githubusercontent.com/DefaultValue/docker_infrastructure/master/docker_infrastructure_schema.png)
+2) deprecated: MySQL 5.6 and 5.7, MariaDB 10.1, etc. containers
+3) deprecated: phpMyAdmin - [http://phpmyadmin.docker.local](http://phpmyadmin.docker.local)
+4) deprecated: Mailhog - [http://mailhog.docker.local](http://mailhog.docker.local)
 
 All infrastructure is cloned and launched by the `Ubuntu post-installation scripts`. You can do this manually if needed:
 
@@ -45,11 +39,9 @@ mkdir -p ~/misc/apps ~/misc/certs ~/misc/db
 cd ~/misc/apps && git clone git@github.com:DefaultValue/ubuntu_post_install_scripts.git
 printf '\nexport PROJECTS_ROOT_DIR=${HOME}/misc/apps/' >> ~/.bash_aliases
 printf '\nexport SSL_CERTIFICATES_DIR=${HOME}/misc/certs/' >> ~/.bash_aliases
-printf '\nexport EXECUTION_ENVIRONMENT=development' >> ~/.bash_aliases
 
 export PROJECTS_ROOT_DIR=${HOME}/misc/apps/
 export SSL_CERTIFICATES_DIR=${HOME}/misc/certs/
-export EXECUTION_ENVIRONMENT=development
 
 cd ./local_infrastructure/
 cp ./configuration/certificates.toml.dist ./configuration/certificates.toml
@@ -63,36 +55,6 @@ After that, you can use Docker files from the folder `./templates/project/` for 
 Better to use `Dockerizer for PHP` instead of moving and editing the files manually.
 
 
-## Docker Templates ##
-
-The whole infrastructure consists of the following files:
-
-- `./templates/project/docker-compose.yml` - main compose file with all services. Is used to populate environment
-  files as well, so that you can upgrade project infrastructure on the dev/stating servers without affecting the
-  production configuration
-- `./templates/project/docker-rebuild.sh` - some useful commands for Docker;
-- `./templates/project/docker-sync.yml` - for MasOS users (see the respective section at the bottom)
-- `./templates/project/docker/.htaccess` - protect the `docker` folder inside your project :)
-- `./templates/project/docker/Dockerfile` - Dockerfile based on the official PHP images. Development versions contain Node and Go binary for Mailhog.
-- `./templates/project/docker/virtual-host.conf` - Apache2 virtual host file. Easy to share, easy to modify.
-
-If you want to configure the things manually (and learn how the things work):
-
-1) copy the whole `./templates/project` folder to your project root folder;
-
-2) pick up a suitable Dockerfile from the folder `./templates/php/` and replace the one in your project OR
-   change the image name to include the appropriate PHP version;
-
-3) change domains, container name etc.;
-
-4) generate ssl certificate with `cd ${SSL_CERTIFICATES_DIR} && mkcert example.com www.example.com`;
-
-5) add an entry to your `/etc/hosts` file.
-
-We strongly recommend using the `SETUP`, `DOCKERIZE` and `ENVADD` aliases from the [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php)
-project instead of manually editing the `docker-compose*.yml` and other files.
-
-
 ## HTTPS is insecure ##
 
 If the certificates generated by `mkcert` are insecure then run the following and restart the browser:
@@ -104,7 +66,9 @@ mkcert -install
 This may happen because browsers are not started during the software installation and local CA is not trusted yet.
 
 
-## MySQL ##
+## MySQL - deprecated ##
+
+Please, use project-level Docker containers instead. See [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) for more details.
 
 MySQL containers can be accessed via the aliases `MY56`, `MY57` etc. aliases for MySQL 5.6 and 5.7 respectively.
 You can also directly connect to the MySQL server:
@@ -182,12 +146,11 @@ Because of the old Linux kernel version on MacOS you should change docker-compos
 - remove `host.docker.internal:172.17.0.1`
 
 
-## Security ##
+## Security disclaimer ##
 
 Important! We aim to make local development easy and keep every environment separated from each other. Maintaining native
 Docker containers should make it possible to use containers with any delivery/deployment system and keep the things
-consistent. though, as you can see, all applications use the same database containers and work in the same network.
-You can get some ideas from here and create own infrastructures. But do not try using this infrastructure 'as is'
+consistent. You can get some ideas from here and create own infrastructures. Do not try using this infrastructure 'as is'
 in production!
 
 
@@ -224,20 +187,9 @@ bash ./local_infrastructure/migration/migrate_1.x-2.0.sh
 ```
 
 
-## TODO ##
-
-There are yet a lot of features to add, for example:
-- Nginx containers;
-- Varnish;
-- automate ionCube installation;
-- etc.
-
-We appreciate help developing this project and still keeping it as 'Docker-native' as possible. Other people should be
-able to re-use and easily **extend** containers or compose files for their needs, but not **modify** them.
-
-
 ## Author and maintainer ##
 
 [Maksym Zaporozhets](mailto:maksimz@default-value.com)
 
-[Magento profile](https://u.magento.com/certification/directory/dev/180177/)
+P.S.: We appreciate any help developing this project and still keeping it as 'Docker-native' as possible. Other people should be
+able to re-use and easily **extend** containers or compose files for their needs, but not **modify** them.
