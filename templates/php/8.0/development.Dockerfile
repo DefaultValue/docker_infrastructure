@@ -1,6 +1,6 @@
 FROM defaultvalue/php:8.0-production
 
-RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+RUN cat /usr/local/etc/php/php.ini-development > /usr/local/etc/php/php.ini
 
 RUN pecl install xdebug-3.1.4 ; \
     docker-php-ext-enable xdebug ; \
