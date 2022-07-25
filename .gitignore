@@ -1,3 +1,5 @@
 .DS_Store
 .idea/*
 /local_infrastructure/configuration/certificates.toml
+/local_infrastructure/dashboard/*
+!/local_infrastructure/dashboard/.gitkeep
