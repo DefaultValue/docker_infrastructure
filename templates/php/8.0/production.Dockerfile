@@ -6,6 +6,7 @@ RUN apt update ; \
     apt install -y \
         cron \
         git \
+        jq \
         lsof \
         zip \
         unzip \
@@ -49,7 +50,8 @@ RUN echo "opcache.enable=1" >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.i
 RUN a2enmod rewrite proxy proxy_http ssl headers expires
 
 # Must use the same UID/GUI as on the local system for the shared files to be editable on both systems
-RUN groupadd -g 1000 docker && useradd -u 1000 -g docker -m docker
+RUN groupadd -g 1000 docker ; \
+    useradd -u 1000 -g docker -m docker
 
 COPY ./docker/composer-proxy /usr/local/bin/composer
 
