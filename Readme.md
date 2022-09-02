@@ -66,6 +66,14 @@ mkcert -install
 This may happen because browsers are not started during the software installation and local CA is not trusted yet.
 
 
+## Composer ##
+
+Composer commands are run like this: `php -d memory_limit=4096M /usr/local/bin/composer${composerVersion}`
+
+Thus, PHP memory limit in the ini files is not applied to Composer. This allows installing application like Magento
+without the need to have a git memory limit for CLI. See the file `./docker/composer-proxy`.
+
+
 ## MySQL - deprecated ##
 
 Please, use project-level Docker containers instead. See [Dockerizer for PHP](https://github.com/DefaultValue/dockerizer_for_php) for more details.

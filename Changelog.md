@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.2] - 2022.09.02
+
+### Changed
+
+- PHP `memory_limit` set to `2048M` for 7.4-8.1. Composer is always run with `php -d memory_limit=4096M ` (see `./docker/composer-proxy`)
+
+
 ## [2.2.1] - 2022.05.03
 
 Preparing to Dockerizer v3 release.

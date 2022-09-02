@@ -1,4 +1,5 @@
 #!/bin/sh
 composerVersion="${COMPOSER_VERSION:-2}"
-composerCommand="composer${composerVersion}"
+# Magento requires up to 4GB RAM for `composer create-project` and `composer install` to run
+composerCommand="php -d memory_limit=4096M /usr/local/bin/composer${composerVersion}"
 $composerCommand "$@"
