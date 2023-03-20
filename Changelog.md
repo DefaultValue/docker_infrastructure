@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.3] - 2023.03.20
+
+### Deprecated
+
+- Deprecated the entire projects. In the nearest future, it will only keep the PHP Dockerfiles. Everything related to the `local_infrastructure` is not supported anymore, and soon will be removed.
+
+
+### Removed
+
+- Dockerizer 1/2 project templates
+
+
 ## [2.2.2] - 2022.09.02
 
 ### Changed

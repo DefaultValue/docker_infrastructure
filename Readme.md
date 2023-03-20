@@ -1,3 +1,10 @@
+# Deprecation notice #
+
+This repository will temporarily keep PHP Dockerfiles, and we plan to remove it. Dockerizer v3.2 will include Traekif
+composition template, which makes this repository obsolete. Follow the [Dockerizer for PHP Wiki](https://github.com/DefaultValue/dockerizer_for_php/wiki)
+for more information.
+
+
 # Docker-based PHP development infrastructure. From clean Ubuntu to deployed Magento 2 in 5 commands. #
 
 This is a part of the local infrastructure project which aims to create easy to install and use environment for PHP development based on Ubuntu LTS.
