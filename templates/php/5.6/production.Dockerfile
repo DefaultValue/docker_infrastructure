@@ -2,7 +2,9 @@
 FROM php:5.6.40-apache-stretch@sha256:0a40fd273961b99d8afe69a61a68c73c04bc0caa9de384d3b2dd9e7986eec86d
 
 # Based on https://unix.stackexchange.com/questions/743839/apt-get-update-failed-to-fetch-debian-amd64-packages-while-building-dockerfile-f
-RUN echo 'deb http://archive.debian.org/debian stretch main' > /etc/apt/sources.list
+# and https://serverfault.com/questions/1074688/security-debian-org-does-not-have-a-release-file-on-with-debian-docker-images
+RUN echo 'deb http://archive.debian.org/debian stretch main' > /etc/apt/sources.list \
+    && sed -i 's/stable\/updates/stable-security\/updates/' /etc/apt/sources.list
 
 # Install packages
 RUN apt update \
@@ -34,8 +36,6 @@ RUN apt install -y memcached libmemcached-dev \
     && rm memcached-2.2.0.tgz
 
 # Install imagick 3.7.0: https://pecl.php.net/package/imagick (PHP 5.4.0 or newer)
-#Imagick compiled with ImageMagick version => ImageMagick 6.9.7-4 Q16 x86_64 20170114 http://www.imagemagick.org
-#Imagick using ImageMagick library version => ImageMagick 6.9.7-4 Q16 x86_64 20170114 http://www.imagemagick.org
 RUN curl --insecure https://pecl.php.net/get/imagick-3.7.0.tgz -o imagick-3.7.0.tgz \
     && pecl install --offline imagick-3.7.0.tgz \
     && docker-php-ext-enable imagick \
@@ -53,25 +53,22 @@ RUN curl http://download.pear.php.net/package/MIME_Type-1.4.1.tgz -o MIME_Type.t
     && pear install MIME_Type.tgz \
     && rm MIME_Type.tgz
 
-# Configure PHP extentions
+# Configure GD2 installation options
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 
 # Install PHP Extensions
-RUN docker-php-ext-install gd intl mysqli pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
+RUN docker-php-ext-install gd intl mysqli opcache pcntl pdo_mysql recode soap xml xmlrpc xsl zip bcmath mcrypt
 
 RUN echo 'always_populate_raw_post_data=-1\n\
 memory_limit=2048M\n\
 realpath_cache_size=10M\n\
-realpath_cache_ttl=7200' > /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
-
-# Will use this in production as well for now - till we do not have full CD process
-RUN docker-php-ext-install opcache \
-    && echo 'opcache.enable=1\n\
+realpath_cache_ttl=7200\n\
+opcache.enable=1\n\
 opcache.validate_timestamps=1\n\
 opcache.revalidate_freq=1\n\
 opcache.max_wasted_percentage=10\n\
 opcache.memory_consumption=256\n\
-opcache.max_accelerated_files=20000' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
+opcache.max_accelerated_files=20000' > /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
 RUN a2enmod rewrite proxy proxy_http ssl headers expires
 
@@ -85,8 +82,8 @@ RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/lo
 
 RUN echo '#!/bin/sh\n\
 composerVersion="${COMPOSER_VERSION:-2}"\n\
-# Magento requires up to 4GB RAM for `composer create-project` and `composer install` to run\n\
-composerCommand="php -d memory_limit=4096M /usr/local/bin/composer${composerVersion}"\n\
+# Magento requires up to 6GB RAM for `composer create-project` and `composer install` to run (2.1.18)\n\
+composerCommand="php -d memory_limit=6144M /usr/local/bin/composer${composerVersion}"\n\
 $composerCommand "$@"' > /usr/local/bin/composer \
     && chmod +x /usr/local/bin/composer
 

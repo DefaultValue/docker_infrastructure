@@ -8,8 +8,8 @@ for PHP development. Based on Ubuntu LTS.
 
 # Deprecation notice #
 
-This repository will temporarily keep PHP Dockerfiles, and we plan to remove it. Dockerizer v3.2 includes Traekif
-composition template, which makes this repository obsolete.
+This repository will temporarily keep PHP Dockerfiles, and we plan to move it to a more suitable namespace.
+Dockerizer v3.2 includes Traekif composition template, which makes this repository obsolete.
 
 ## Author and maintainer ##
 

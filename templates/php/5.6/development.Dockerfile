@@ -30,12 +30,10 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
     && apt install nodejs -y \
     && npm install -g grunt-cli
 
-RUN a2enmod rewrite proxy proxy_http ssl headers expires
-
 # Install mhsendmail - Sendmail replacement for Mailhog
 RUN curl -sL https://github.com/devilbox/mhsendmail/releases/download/v0.3.0/mhsendmail_linux_amd64 --output /usr/bin/mhsendmail \
     && chmod +x /usr/bin/mhsendmail \
-    && echo 'sendmail_path="/usr/bin/mhsendmail -t --smtp-addr=mailhog:1025"' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini \
+    && echo 'sendmail_path="/usr/bin/mhsendmail -t --smtp-addr=mailhog:1025"' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
 RUN rm -r /var/lib/apt/lists/* \
     && rm -rf /tmp/pear/
