@@ -2,7 +2,7 @@ FROM defaultvalue/php:8.1.26-production
 
 RUN cat /usr/local/etc/php/php.ini-development > /usr/local/etc/php/php.ini
 
-RUN pecl install xdebug-3.2.1 \
+RUN pecl install xdebug-3.2.2 \
     && docker-php-ext-enable xdebug \
     && echo 'xdebug.mode=debug\n\
 xdebug.remote_handler=dbgp\n\
