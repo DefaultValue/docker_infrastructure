@@ -9,6 +9,9 @@
 # docker exec -it $(DOCKERIZER composition:get-container-name php) php -r 'var_export(get_loaded_extensions(true));'
 # docker exec -it $(DOCKERIZER composition:get-container-name php) cat /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 
+# === MocOS ===
+# Replace `docker build` with `docker build --platform linux/arm64/v8`
+
 set -e
 
 docker container prune -f

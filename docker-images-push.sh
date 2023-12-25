@@ -11,7 +11,7 @@
 
 set -e
 
-docker login -u defaultvalue -p
+docker login -u defaultvalue
 
 docker push defaultvalue/php:5.6.40-production
 docker push defaultvalue/php:5.6.40-development

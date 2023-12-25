@@ -11,6 +11,12 @@ for PHP development. Based on Ubuntu LTS.
 This repository will temporarily keep PHP Dockerfiles, and we plan to move it to a more suitable namespace.
 Dockerizer v3.2 includes Traekif composition template, which makes this repository obsolete.
 
+# Building and testing images #
+
+1. Build images with `docker-images-build.sh`. To build `linux/arm64/v8` replace `docker build` with `docker build --platform linux/arm64/v8`.
+2. Run `magento:test-templates` from the [Dockerizer](https://github.com/DefaultValue/dockerizer_for_php) project.
+3. Push images to the registry with `docker-images-push.sh`
+
 ## Author and maintainer ##
 
 [Maksym Zaporozhets](mailto:maksimzaporozhets@gmail.com)
