@@ -1,4 +1,4 @@
-FROM php:8.2.7-apache-bookworm@sha256:58434deac2fd04f7169c0daadabe7d9ea278f195a738d1df0f88ea6a272ca529
+FROM php:8.2.13-apache-bookworm@sha256:c02b2ab6335472834705a9a066e55b20ddff6b923ddfd3dc136af016519de69a
 
 # Install packages
 RUN apt update \

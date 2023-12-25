@@ -13,7 +13,7 @@ Dockerizer v3.2 includes Traekif composition template, which makes this reposito
 
 ## Author and maintainer ##
 
-[Maksym Zaporozhets](mailto:maksimz@default-value.com)
+[Maksym Zaporozhets](mailto:maksimzaporozhets@gmail.com)
 
 P.S.: We appreciate any help developing this project and still keeping it as 'Docker-native' as possible. Other people should be
 able to re-use and easily **extend** containers or compose files for their needs, but not **modify** them.

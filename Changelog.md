@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.3.0] - 2023.12.25
+
+### Added
+
+- New PHP 8.3 images
+
+### Changed
+
+- Image update policy: new versions or fixes will always have a new tag. Old tags will not be updated.
+- Image tags now contain the full PHP version (e.g. `8.3.0-development` instead of `8.3-development`) for explicit versioning.
+
+
 # [2.3.0] - 2023.06.22
 
 ### Added

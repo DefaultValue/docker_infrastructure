@@ -1,4 +1,4 @@
-FROM php:8.0.30-apache-bullseye@sha256:862325aee87fc1d9b818bfc96a4412b9cd008a951101913077421d3d86c4cc9d
+FROM php:8.3.0-apache-bookworm@sha256:1e4742e43897996f86b19f2e8277f29ee67e0dc71dee06118df4501f41ac8a2f
 
 # Install packages
 RUN apt update \
@@ -21,8 +21,9 @@ RUN apt update \
         zlib1g-dev \
         --no-install-recommends
 
-RUN pecl install imagick \
-    && docker-php-ext-enable imagick
+# https://github.com/Imagick/imagick/pull/641
+#RUN pecl install imagick \
+#    && docker-php-ext-enable imagick
 
 RUN pecl install redis \
     && docker-php-ext-enable redis
@@ -51,14 +52,7 @@ RUN a2enmod rewrite proxy proxy_http ssl headers expires
 RUN groupadd -g 1000 docker \
     && useradd -u 1000 -g docker -m docker
 
-RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer1 --1 \
-    && curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer2
-
-RUN echo '#!/bin/sh\n\
-composerVersion="${COMPOSER_VERSION:-2}"\n\
-# Magento requires up to 4GB RAM for `composer create-project` and `composer install` to run\n\
-composerCommand="php -d memory_limit=4096M /usr/local/bin/composer${composerVersion}"\n\
-$composerCommand "$@"' > /usr/local/bin/composer \
+RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && chmod +x /usr/local/bin/composer
 
 RUN cat /usr/local/etc/php/php.ini-production > /usr/local/etc/php/php.ini
