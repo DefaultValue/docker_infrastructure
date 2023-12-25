@@ -33,7 +33,7 @@ RUN apt install -y memcached libmemcached-dev \
 RUN pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN pecl install redis \
+RUN pecl install redis-5.3.7 \
     && docker-php-ext-enable redis
 
 RUN pear install MIME_Type
