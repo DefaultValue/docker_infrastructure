@@ -13,9 +13,11 @@ Dockerizer v3.2 includes Traekif composition template, which makes this reposito
 
 # Building and testing images #
 
-1. Build images with `docker-images-build.sh`. To build `linux/arm64/v8` replace `docker build` with `docker build --platform linux/arm64/v8`.
-2. Run `magento:test-templates` from the [Dockerizer](https://github.com/DefaultValue/dockerizer_for_php) project.
-3. Push images to the registry with `docker-images-push.sh`
+1. Build images with `docker-images-build.sh`.
+2. Run `magento:test-templates` from the [Dockerizer](https://github.com/DefaultValue/dockerizer_for_php) project to test them.
+3. Run `docker-images-build-multiplatform.sh` to build and push images for multiple platforms.
+
+It is highly recommended to build and test images on at least Linux and MacOS.
 
 ## Author and maintainer ##
 

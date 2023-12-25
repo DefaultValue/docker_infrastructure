@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - New PHP 8.3 images
+- Multiplatform build script `docker-images-build-multiplatform.sh`.
 
 ### Changed
 
