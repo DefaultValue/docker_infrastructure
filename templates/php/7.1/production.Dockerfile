@@ -1,4 +1,4 @@
-FROM php:7.1.33-apache-buster@sha256:70eefcf4372b279101259e905996b7733a87688d0b48625af01b55947836bb1f
+FROM php:7.1.33-apache-buster
 
 # Install packages
 RUN apt update \

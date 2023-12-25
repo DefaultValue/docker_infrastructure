@@ -1,5 +1,5 @@
 # PHP 5.6.40 removal: https://github.com/docker-library/php/commit/e9320fdb752edb2fb5d1be8412172f5c78255a45
-FROM php:5.6.40-apache-stretch@sha256:0a40fd273961b99d8afe69a61a68c73c04bc0caa9de384d3b2dd9e7986eec86d
+FROM php:5.6.40-apache-stretch
 
 # Based on https://unix.stackexchange.com/questions/743839/apt-get-update-failed-to-fetch-debian-amd64-packages-while-building-dockerfile-f
 # and https://serverfault.com/questions/1074688/security-debian-org-does-not-have-a-release-file-on-with-debian-docker-images

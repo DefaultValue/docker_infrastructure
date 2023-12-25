@@ -1,4 +1,4 @@
-FROM php:8.0.30-apache-bullseye@sha256:862325aee87fc1d9b818bfc96a4412b9cd008a951101913077421d3d86c4cc9d
+FROM php:8.0.30-apache-bullseye
 
 # Install packages
 RUN apt update \

@@ -1,4 +1,4 @@
-FROM php:7.4.33-apache-bullseye@sha256:c9d7e608f73832673479770d66aacc8100011ec751d1905ff63fae3fe2e0ca6d
+FROM php:7.4.33-apache-bullseye
 
 # Install packages
 RUN apt update \
