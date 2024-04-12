@@ -1,4 +1,4 @@
-FROM defaultvalue/php:8.3.0-production
+FROM defaultvalue/php:8.3.6-production
 
 RUN cat /usr/local/etc/php/php.ini-development > /usr/local/etc/php/php.ini
 

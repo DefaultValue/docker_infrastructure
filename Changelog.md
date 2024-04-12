@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Image update policy: new versions or fixes will always have a new tag. Old tags will not be updated.
-- Image tags now contain the full PHP version (e.g. `8.3.0-development` instead of `8.3-development`) for explicit versioning.
+- Image tags now contain the full PHP version (e.g. `8.3.6-development` instead of `8.3-development`) for explicit versioning.
 
 
 # [2.3.0] - 2023.06.22

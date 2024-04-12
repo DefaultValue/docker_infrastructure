@@ -43,13 +43,13 @@ docker build -t defaultvalue/php:8.0.30-production . -f production.Dockerfile
 docker build -t defaultvalue/php:8.0.30-development . -f development.Dockerfile
 
 cd ~/misc/apps/docker_infrastructure/templates/php/8.1/ || exit
-docker build -t defaultvalue/php:8.1.26-production . -f production.Dockerfile
-docker build -t defaultvalue/php:8.1.26-development . -f development.Dockerfile
+docker build -t defaultvalue/php:8.1.27-production . -f production.Dockerfile
+docker build -t defaultvalue/php:8.1.27-development . -f development.Dockerfile
 
 cd ~/misc/apps/docker_infrastructure/templates/php/8.2/ || exit
-docker build -t defaultvalue/php:8.2.13-production . -f production.Dockerfile
-docker build -t defaultvalue/php:8.2.13-development . -f development.Dockerfile
+docker build -t defaultvalue/php:8.2.18-production . -f production.Dockerfile
+docker build -t defaultvalue/php:8.2.18-development . -f development.Dockerfile
 
 cd ~/misc/apps/docker_infrastructure/templates/php/8.3/ || exit
-docker build -t defaultvalue/php:8.3.0-production . -f production.Dockerfile
-docker build -t defaultvalue/php:8.3.0-development . -f development.Dockerfile
+docker build -t defaultvalue/php:8.3.6-production . -f production.Dockerfile
+docker build -t defaultvalue/php:8.3.6-development . -f development.Dockerfile

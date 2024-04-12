@@ -1,5 +1,5 @@
 # Based on Debian 11 (bullseye) in order to keep NodeJS 16. Otherwise NodeJS 18 would be installed for some reason.
-FROM php:8.1.26-apache-bullseye
+FROM php:8.1.27-apache-bullseye
 
 # Install packages
 RUN apt update \

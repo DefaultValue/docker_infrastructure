@@ -1,4 +1,4 @@
-FROM php:8.3.0-apache-bookworm
+FROM php:8.3.6-apache-bookworm
 
 # Install packages
 RUN apt update \

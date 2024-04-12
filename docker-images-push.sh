@@ -34,11 +34,11 @@ docker push defaultvalue/php:7.4.33-development
 docker push defaultvalue/php:8.0.30-production
 docker push defaultvalue/php:8.0.30-development
 
-docker push defaultvalue/php:8.1.26-production
-docker push defaultvalue/php:8.1.26-development
+docker push defaultvalue/php:8.1.27-production
+docker push defaultvalue/php:8.1.27-development
 
-docker push defaultvalue/php:8.2.13-production
-docker push defaultvalue/php:8.2.13-development
+docker push defaultvalue/php:8.2.18-production
+docker push defaultvalue/php:8.2.18-development
 
-docker push defaultvalue/php:8.3.0-production
-docker push defaultvalue/php:8.3.0-development
+docker push defaultvalue/php:8.3.6-production
+docker push defaultvalue/php:8.3.6-development
