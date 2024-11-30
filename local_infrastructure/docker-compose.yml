@@ -28,6 +28,21 @@ services:
       - ./configuration/:/configuration/
       - ${SSL_CERTIFICATES_DIR}:/certs/
 
+  dashboard:
+    image: linuxserver/heimdall:2.4.13
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Kyiv
+    volumes:
+      - ./dashboard:/config
+    network_mode: bridge
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard-http.rule=Host(`dashboard.local`)
+      - traefik.http.routers.dashboard-http.entrypoints=http
+
   mysql56:
     container_name: mysql56
     image: mysql:5.6
