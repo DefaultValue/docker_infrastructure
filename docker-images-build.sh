@@ -51,5 +51,5 @@ docker build -t defaultvalue/php:8.2.18-production . -f production.Dockerfile
 docker build -t defaultvalue/php:8.2.18-development . -f development.Dockerfile
 
 cd ~/misc/apps/docker_infrastructure/templates/php/8.3/ || exit
-docker build -t defaultvalue/php:8.3.6-production . -f production.Dockerfile
-docker build -t defaultvalue/php:8.3.6-development . -f development.Dockerfile
+docker build -t defaultvalue/php:8.3.17-production . -f production.Dockerfile
+docker build -t defaultvalue/php:8.3.17-development . -f development.Dockerfile

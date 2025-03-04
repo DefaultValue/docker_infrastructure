@@ -46,8 +46,8 @@ docker buildx build --platform linux/amd64,linux/arm64,linux/arm64/v8 -t default
 docker buildx build --platform linux/amd64,linux/arm64,linux/arm64/v8 -t defaultvalue/php:8.2.18-development . -f development.Dockerfile --push
 
 cd ~/misc/apps/docker_infrastructure/templates/php/8.3/ || exit
-docker buildx build --platform linux/amd64,linux/arm64,linux/arm64/v8 -t defaultvalue/php:8.3.6-production . -f production.Dockerfile --push
-docker buildx build --platform linux/amd64,linux/arm64,linux/arm64/v8 -t defaultvalue/php:8.3.6-development . -f development.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm64/v8 -t defaultvalue/php:8.3.17-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm64/v8 -t defaultvalue/php:8.3.17-development . -f development.Dockerfile --push
 
 docker buildx stop phpbuilder
 docker buildx rm phpbuilder
