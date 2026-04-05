@@ -1,9 +1,11 @@
-FROM php:8.3.17-apache-bookworm
+FROM php:8.3.30-apache-trixie
+
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install packages
-RUN apt update \
-    && apt upgrade -y \
-    && apt install -y \
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
         cron \
         git \
         jq \
@@ -21,25 +23,18 @@ RUN apt update \
         zlib1g-dev \
         librabbitmq-dev \
         libssl-dev \
-        --no-install-recommends
+    && rm -rf /var/lib/apt/lists/*
 
-# https://github.com/Imagick/imagick/pull/641
-#RUN pecl install imagick \
-#    && docker-php-ext-enable imagick
+# Install PECL extensions
+RUN pecl install imagick redis amqp \
+    && docker-php-ext-enable imagick redis amqp
 
-RUN pecl install redis \
-    && docker-php-ext-enable redis
+# Configure and install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install bcmath gd intl mysqli opcache pcntl pdo_mysql soap sockets xsl zip
 
-RUN pecl install amqp \
-    && docker-php-ext-enable amqp
-
-# Configure GD2 installation options
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-
-# Install PHP Extensions
-RUN docker-php-ext-install bcmath gd intl mysqli opcache pcntl pdo_mysql soap sockets xsl zip
-
-RUN echo 'date.timezone=UTC\n\
+# PHP configuration and Apache modules
+RUN printf 'date.timezone=UTC\n\
 always_populate_raw_post_data=-1\n\
 memory_limit=2048M\n\
 realpath_cache_size=10M\n\
@@ -53,9 +48,8 @@ opcache.max_accelerated_files=20000\n\
 amqp.connection_timeout=3\n\
 amqp.read_timeout=3\n\
 amqp.write_timeout=3\n\
-amqp.heartbeat=2' > "$PHP_INI_DIR/conf.d/docker-php-zzz-custom.ini"
-
-RUN a2enmod rewrite proxy proxy_http ssl headers expires
+amqp.heartbeat=2\n' > "$PHP_INI_DIR/conf.d/docker-php-zzz-custom.ini" \
+    && a2enmod rewrite proxy proxy_http ssl headers expires
 
 # Must use the same UID/GUI as on the local system for the shared files to be editable on both systems
 RUN groupadd -g 1000 docker \
@@ -64,7 +58,5 @@ RUN groupadd -g 1000 docker \
 RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && chmod +x /usr/local/bin/composer
 
-RUN cat /usr/local/etc/php/php.ini-production > /usr/local/etc/php/php.ini
-
-RUN rm -r /var/lib/apt/lists/* \
+RUN cat /usr/local/etc/php/php.ini-production > /usr/local/etc/php/php.ini \
     && rm -rf /tmp/pear/

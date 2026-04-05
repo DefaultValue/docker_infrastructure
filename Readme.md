@@ -3,7 +3,7 @@
 This is a part of the local infrastructure project which aims to create easy to install and use environment
 for PHP development. Based on Ubuntu LTS.
 
-1. [Ubuntu post-installation scripts](https://github.com/DefaultValue/ubuntu_post_install_scripts): Install all software PHP development with a single script.
+1. [Ubuntu post-installation scripts](https://github.com/maksymz/ubuntu_post_install_scripts): Install all software PHP development with a single script.
 2. [Dockerizer](https://github.com/DefaultValue/dockerizer_for_php): Add Docker files to your existing projects in one command. Install any Magento 2 version in 1 command. Dockerizer is a tool for easy creation and management of templates for Docker compositions for your PHP applications. You can use it for development or in the CI/CD pipelines. Check [Dockerizer Wiki](https://github.com/DefaultValue/dockerizer_for_php/wiki) to get more information on available commands and what the tool does.
 
 # Deprecation notice #
