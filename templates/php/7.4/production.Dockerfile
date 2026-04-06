@@ -60,8 +60,7 @@ RUN groupadd -g 1000 docker \
     && useradd -u 1000 -g docker -m docker
 
 RUN curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer1 --1 \
-    && curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer2 \
-    && su docker -c "composer1 global require hirak/prestissimo"
+    && curl -k -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer2
 
 RUN echo '#!/bin/sh\n\
 composerVersion="${COMPOSER_VERSION:-2}"\n\

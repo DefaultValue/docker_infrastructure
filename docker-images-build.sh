@@ -35,10 +35,10 @@ docker image prune -af
 #docker build -t defaultvalue/php:7.3.33-production . -f production.Dockerfile
 #docker build -t defaultvalue/php:7.3.33-development . -f development.Dockerfile
 #
-#cd ~/misc/apps/docker_infrastructure/templates/php/7.4/ || exit
-#docker build -t defaultvalue/php:7.4.33-production . -f production.Dockerfile
-#docker build -t defaultvalue/php:7.4.33-development . -f development.Dockerfile
-#
+cd ~/misc/apps/docker_infrastructure/templates/php/7.4/ || exit
+docker build -t defaultvalue/php:7.4.33.1-production . -f production.Dockerfile
+docker build -t defaultvalue/php:7.4.33.1-development . -f development.Dockerfile
+
 cd ~/misc/apps/docker_infrastructure/templates/php/8.0/ || exit
 docker build -t defaultvalue/php:8.0.30.1-production . -f production.Dockerfile
 docker build -t defaultvalue/php:8.0.30.1-development . -f development.Dockerfile
