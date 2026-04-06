@@ -24,7 +24,8 @@ RUN ARCH=$(dpkg --print-architecture) \
     && npm config set legacy-peer-deps=true
 
 # Install mhsendmail - Sendmail replacement for Mailhog
-RUN curl -sL https://github.com/devilbox/mhsendmail/releases/download/v0.3.0/mhsendmail_linux_amd64 --output /usr/bin/mhsendmail \
+RUN ARCH=$(dpkg --print-architecture) \
+    && curl -sL "https://github.com/devilbox/mhsendmail/releases/download/v0.3.0/mhsendmail_linux_${ARCH}" --output /usr/bin/mhsendmail \
     && chmod +x /usr/bin/mhsendmail \
     && echo 'sendmail_path="/usr/bin/mhsendmail -t --smtp-addr=mailhog:1025"' >> /usr/local/etc/php/conf.d/docker-php-xxx-custom.ini
 

@@ -57,6 +57,14 @@ cd ~/misc/apps/docker_infrastructure/templates/php/8.3/ || exit
 docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30-production . -f production.Dockerfile --push
 docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30-development . -f development.Dockerfile --push
 
+cd ~/misc/apps/docker_infrastructure/templates/php/8.4/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-development . -f development.Dockerfile --push
+
+cd ~/misc/apps/docker_infrastructure/templates/php/8.5/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-development . -f development.Dockerfile --push
+
 docker buildx stop phpbuilder
 docker buildx rm phpbuilder
 docker buildx prune --all -f

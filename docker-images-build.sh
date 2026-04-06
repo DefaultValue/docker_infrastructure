@@ -12,8 +12,8 @@
 
 set -euo pipefail
 
-docker container prune -f
-docker image prune -af
+#docker container prune -f
+#docker image prune -af
 
 #cd ~/misc/apps/docker_infrastructure/templates/php/5.6/ || exit
 #docker build -t defaultvalue/php:5.6.40-production . -f production.Dockerfile
@@ -54,3 +54,11 @@ docker build -t defaultvalue/php:8.2.30-development . -f development.Dockerfile
 cd ~/misc/apps/docker_infrastructure/templates/php/8.3/ || exit
 docker build -t defaultvalue/php:8.3.30-production . -f production.Dockerfile
 docker build -t defaultvalue/php:8.3.30-development . -f development.Dockerfile
+
+cd ~/misc/apps/docker_infrastructure/templates/php/8.4/ || exit
+docker build -t defaultvalue/php:8.4.19-production . -f production.Dockerfile
+docker build -t defaultvalue/php:8.4.19-development . -f development.Dockerfile
+
+cd ~/misc/apps/docker_infrastructure/templates/php/8.5/ || exit
+docker build -t defaultvalue/php:8.5.4-production . -f production.Dockerfile
+docker build -t defaultvalue/php:8.5.4-development . -f development.Dockerfile
