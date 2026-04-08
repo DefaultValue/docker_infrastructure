@@ -5,17 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [2.5.1] - Unrelease
+# [2.5.1] - 2026-04-08
 
 ### Added
 
 - PHP 8.4 & 8.5 images
+- `ext-ftp` for PHP 8.3 to support Magento 2.4.8
 
 ### Changed
 
 - Added `mhsendmail` for ARM64
 
-# [2.5.0] - 2026.04.06
+# [2.5.0] - 2026-04-06
 
 ### Changed
 
@@ -27,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dropped the `local_infrastructure` part of the project. It was extremely outdated.
 - Remove old images from the build script.
 
-# [2.4.0] - 2023.12.25
+# [2.4.0] - 2023-12-25
 
 ### Added
 
@@ -40,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Image tags now contain the full PHP version (e.g. `8.3.6-development` instead of `8.3-development`) for explicit versioning.
 
 
-# [2.3.0] - 2023.06.22
+# [2.3.0] - 2023-06-22
 
 ### Added
 
@@ -56,14 +57,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed the external `composer-proxy` script
 
 
-## [2.2.4] - 2023.06.16
+## [2.2.4] - 2023-06-16
 
 ### Changed
 
 - Readme update after the Dockerizer 3.2.0 release. Removed all information about using this repository as a part of the development environment.
 
 
-## [2.2.3] - 2023.03.20
+## [2.2.3] - 2023-03-20
 
 ### Deprecated
 
@@ -75,14 +76,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dockerizer 1/2 project templates
 
 
-## [2.2.2] - 2022.09.02
+## [2.2.2] - 2022-09-02
 
 ### Changed
 
 - PHP `memory_limit` set to `2048M` for 7.4-8.1. Composer is always run with `php -d memory_limit=4096M ` (see `./docker/composer-proxy`)
 
 
-## [2.2.1] - 2022.05.03
+## [2.2.1] - 2022-05-03
 
 Preparing to Dockerizer v3 release.
 

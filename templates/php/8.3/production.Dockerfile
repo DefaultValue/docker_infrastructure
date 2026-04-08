@@ -31,7 +31,7 @@ RUN pecl install imagick redis amqp \
 
 # Configure and install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install bcmath gd intl mysqli opcache pcntl pdo_mysql soap sockets xsl zip
+    && docker-php-ext-install bcmath ftp gd intl mysqli opcache pcntl pdo_mysql soap sockets xsl zip
 
 # PHP configuration and Apache modules
 RUN printf 'date.timezone=UTC\n\
