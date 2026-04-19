@@ -53,17 +53,29 @@ cd ~/misc/apps/docker_infrastructure/templates/php/8.2/ || exit
 docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.2.30-production . -f production.Dockerfile --push
 docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.2.30-development . -f development.Dockerfile --push
 
-cd ~/misc/apps/docker_infrastructure/templates/php/8.3/ || exit
-docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30.1-production . -f production.Dockerfile --push
-docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30.1-development . -f development.Dockerfile --push
+cd ~/misc/apps/docker_infrastructure/templates/php/8.3/apache/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30.1-apache-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30.1-apache-development . -f development.Dockerfile --push
 
-cd ~/misc/apps/docker_infrastructure/templates/php/8.4/ || exit
-docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-production . -f production.Dockerfile --push
-docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-development . -f development.Dockerfile --push
+cd ~/misc/apps/docker_infrastructure/templates/php/8.3/fpm/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30.1-fpm-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.3.30.1-fpm-development . -f development.Dockerfile --push
 
-cd ~/misc/apps/docker_infrastructure/templates/php/8.5/ || exit
-docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-production . -f production.Dockerfile --push
-docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-development . -f development.Dockerfile --push
+cd ~/misc/apps/docker_infrastructure/templates/php/8.4/apache/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-apache-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-apache-development . -f development.Dockerfile --push
+
+cd ~/misc/apps/docker_infrastructure/templates/php/8.4/fpm/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-fpm-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.4.19-fpm-development . -f development.Dockerfile --push
+
+cd ~/misc/apps/docker_infrastructure/templates/php/8.5/apache/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-apache-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-apache-development . -f development.Dockerfile --push
+
+cd ~/misc/apps/docker_infrastructure/templates/php/8.5/fpm/ || exit
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-fpm-production . -f production.Dockerfile --push
+docker buildx build --platform linux/amd64,linux/arm64 -t defaultvalue/php:8.5.4-fpm-development . -f development.Dockerfile --push
 
 docker buildx stop phpbuilder
 docker buildx rm phpbuilder
