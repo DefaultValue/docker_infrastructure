@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.6.0] - Unreleased
+
+### Added
+
+- PHP-FPM images for PHP 8.3-8.5
+
+### Changed
+
+- Docker image tagging policy for PHP 8.3-8.5: tags now include the web server
+  variant — `{version}-apache-{stage}` and `{version}-fpm-{stage}` (e.g.,
+  `defaultvalue/php:8.4.19-apache-production`,
+  `defaultvalue/php:8.4.19-fpm-development`). Replaces the old
+  `{version}-{stage}` scheme. PHP <=8.2 images are unaffected.
+
 # [2.5.1] - 2026-04-08
 
 ### Added
