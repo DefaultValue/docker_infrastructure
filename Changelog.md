@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.6.1] - 2026-07-29
+
+### Changed
+
+- Update PHP images to the latest versions: 8.2.32, 8.3.32, 8.4.23, 8.5.8.
+- PHP 7.4, 8.0 and 8.1 reached their final releases (7.4.33, 8.0.30, 8.1.34) —
+  marked as such and commented out in the build scripts.
+
 # [2.6.0] - 2026-04-19
 
 ### Added

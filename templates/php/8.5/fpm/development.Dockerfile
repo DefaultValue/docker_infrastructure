@@ -1,4 +1,4 @@
-FROM defaultvalue/php:8.5.4-fpm-production
+FROM defaultvalue/php:8.5.8-fpm-production
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

@@ -1,3 +1,4 @@
+# 8.0.30 is final release
 FROM php:8.0.30-apache-bullseye
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]

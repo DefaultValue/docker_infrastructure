@@ -1,4 +1,4 @@
-FROM php:8.5.4-apache-trixie
+FROM php:8.5.8-apache-trixie
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 

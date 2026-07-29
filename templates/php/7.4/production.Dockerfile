@@ -1,3 +1,4 @@
+# 7.4.33 is final release
 FROM php:7.4.33-apache-bullseye
 
 # Install packages
