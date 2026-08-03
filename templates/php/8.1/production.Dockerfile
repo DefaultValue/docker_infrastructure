@@ -1,3 +1,4 @@
+# 8.1.34 is final release
 FROM php:8.1.34-apache-trixie
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
